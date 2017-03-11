@@ -1,9 +1,10 @@
+import GUI.RealMachine;
 
 public class EntryPoint {
 
 	public static void main(String[] args) {
-		System.out.println("gavno");
-
+		RealMachine frame = new RealMachine();
+		frame.setVisible(true);
 	}
 
 }
