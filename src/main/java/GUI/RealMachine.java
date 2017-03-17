@@ -7,22 +7,24 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Component;
 
 public class RealMachine extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField PTRtextField;
-	private JTextField ICtextField;
-	private JTextField SPtextField;
-	private JTextField CDRtextField;
-	private JTextField ARtextField;
-	private JTextField MDRtextField;
-	private JTextField TItextField;
-	private JTextField PItextField;
-	private JTextField SItextField;
-	private JTable table;
-	private JLabel lblRegisters;
-	private JLabel lblRam;
+	public JPanel contentPane;
+	public JTextField PTRtextField;
+	public JTextField ICtextField;
+	public JTextField SPtextField;
+	public JTextField CDRtextField;
+	public JTextField ARtextField;
+	public JTextField MDRtextField;
+	public JTextField TItextField;
+	public JTextField PItextField;
+	public JTextField SItextField;
+	public JScrollPane scrollPane;
+	public JTable RAMtable;
 
 	/**
 	 * Create the frame.
@@ -33,12 +35,12 @@ public class RealMachine extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][grow][grow]", "[][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][grow][grow]", "[][grow][][][][][][][][][][][][grow]"));
 		
-		lblRegisters = new JLabel("Registers");
+		JLabel lblRegisters = new JLabel("Registers");
 		contentPane.add(lblRegisters, "cell 0 0 2 1");
 		
-		lblRam = new JLabel("RAM");
+		JLabel lblRam = new JLabel("RAM");
 		contentPane.add(lblRam, "cell 2 0");
 		
 		JLabel lblPtr = new JLabel("PTR");
@@ -49,8 +51,22 @@ public class RealMachine extends JFrame {
 		contentPane.add(PTRtextField, "cell 1 1,alignx left");
 		PTRtextField.setColumns(10);
 		
-		table = new JTable();
-		contentPane.add(table, "cell 2 1 1 13,grow");
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		contentPane.add(scrollPane, "cell 2 1 1 13,grow");
+		
+		RAMtable = new JTable();
+		RAMtable.setAlignmentY(Component.TOP_ALIGNMENT);
+		RAMtable.setAlignmentX(Component.LEFT_ALIGNMENT);
+		RAMtable.setRowSelectionAllowed(false);
+		RAMtable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(RAMtable);	
+		
+		JTable rowTable = new RowNumberTable(RAMtable);
+		scrollPane.setRowHeaderView(rowTable);
+		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER,
+		rowTable.getTableHeader());
 		
 		JLabel lblIc = new JLabel("IC");
 		contentPane.add(lblIc, "cell 0 2,alignx trailing");

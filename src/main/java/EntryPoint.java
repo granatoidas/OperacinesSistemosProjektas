@@ -1,10 +1,9 @@
-import GUI.RealMachine;
+import backend.MissingLink;
 
 public class EntryPoint {
 
 	public static void main(String[] args) {
-		RealMachine frame = new RealMachine();
-		frame.setVisible(true);
+		MissingLink mainController = new MissingLink();
 	}
 
 }
