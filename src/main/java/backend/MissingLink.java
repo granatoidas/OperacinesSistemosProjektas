@@ -1,9 +1,5 @@
 package backend;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
@@ -21,21 +17,24 @@ public class MissingLink {
 	public static CPU cpu;
 	public static MemoryUnit ram;
 	public static RealMachine frame;
+	public static HardwareMethods hardwareMethods;
 
 	public MissingLink() {
 		frame = new RealMachine();
 		frame.setVisible(true);
-		cpu = new CPU();
+		
+		
 		ram = new MemoryUnit();
+		cpu = new CPU();
+		
+		hardwareMethods = new HardwareMethods(cpu);
+		
 		setUpRamTable();
-
-		ram.memory[0][0] = new Byte((byte) 0xFF);
 	}
 
 	private void setUpRamTable() {
-		List<Integer> range = IntStream.rangeClosed(0, 255).boxed().collect(Collectors.toList());
-
 		TableModel model = new AbstractTableModel() {
+			private static final long serialVersionUID = 1L;
 			Byte[][] data = ram.memory;
 
 			@Override
