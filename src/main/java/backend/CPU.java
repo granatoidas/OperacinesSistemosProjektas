@@ -1,7 +1,5 @@
 package backend;
 
-import java.util.Arrays;
-
 /**
  * Contains methods describing each instruction
  * 
@@ -10,6 +8,7 @@ import java.util.Arrays;
  */
 public class CPU {
 
+	@SuppressWarnings("unused")
 	private MemoryUnit ramClass;
 	protected Byte[][] ram;
 

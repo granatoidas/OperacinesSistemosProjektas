@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import backend.MemoryUnit;
 import backend.MissingLink;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -42,7 +41,7 @@ public class RealMachine extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][grow]", "[][grow][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][][grow]", "[][][][][][][][][][][][][][][grow]"));
 		
 		JLabel lblRegisters = new JLabel("Registers");
 		contentPane.add(lblRegisters, "cell 0 0 2 1");
@@ -61,7 +60,7 @@ public class RealMachine extends JFrame {
 		scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		contentPane.add(scrollPane, "cell 2 1 1 13,grow");
+		contentPane.add(scrollPane, "cell 2 1 1 14,grow");
 		
 		RAMtable = new JTable();
 		RAMtable.setAlignmentY(Component.TOP_ALIGNMENT);

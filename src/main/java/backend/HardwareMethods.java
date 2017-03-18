@@ -88,7 +88,7 @@ public class HardwareMethods {
 	 * @param reg
 	 * @return
 	 */
-	private Byte[] pagingMechanism(Byte[] reg) {
+	public Byte[] pagingMechanism(Byte[] reg) {
 		return pagingMechanism(reg, cpu.PTR);
 	}
 
