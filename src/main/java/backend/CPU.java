@@ -71,7 +71,7 @@ public class CPU {
 	private Byte[] convertAddress(Byte[] addr){
 		if (MDR == 1)
 			return addr.clone();
-		return convertAddress(addr);
+		return MissingLink.hardwareMethods.pagingMechanism(addr);
 	}
 
 	
