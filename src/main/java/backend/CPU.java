@@ -217,4 +217,21 @@ public class CPU {
 			this.SP = iterateRegister(this.SP, -1);
 		}
 	}
+	
+	public void LDxy(){
+		Byte[] IC = MissingLink.hardwareMethods.pagingMechanism(this.IC);
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		Byte[] ICtmp = iterateRegister(IC, 1);
+		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+		ICtmp = iterateRegister(IC, 2);
+		byte y = ram[hex(IC[0])][hex(IC[1])];
+		Byte[] xy = new Byte[2];
+		xy[0] = x;
+		xy[1] = y;
+		Byte[] xyPTR = MissingLink.hardwareMethods.pagingMechanism(xy);
+		Byte[] SPtmp = iterateRegister(SP, 1);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = ram[hex(xyPTR[0])][hex(xyPTR[1])];
+		this.SP = iterateRegister(this.SP, 1);
+		
+	}
 }
