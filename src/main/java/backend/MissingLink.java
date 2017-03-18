@@ -18,9 +18,9 @@ import GUI.RealMachine;
  *
  */
 public class MissingLink {
-	private static CPU cpu;
-	private static RAM ram;
-	private static RealMachine frame;
+	public static CPU cpu;
+	public static RAM ram;
+	public static RealMachine frame;
 
 	public MissingLink() {
 		frame = new RealMachine();

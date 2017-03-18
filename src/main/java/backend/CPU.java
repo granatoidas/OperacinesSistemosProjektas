@@ -27,7 +27,21 @@ public class CPU {
 	}
 	
 	//Place for methods describing instructions
+	
+	//reikia busenu patikrinimo
 	public void ADD(){
-		// veliau pridesiu komandas
+		byte a = MissingLink.ram.memory[SP[1]][SP[2]-3];
+		byte b = MissingLink.ram.memory[SP[1]][SP[2]-2];
+		byte c = MissingLink.ram.memory[SP[1]][SP[2]-1];
+		byte d = MissingLink.ram.memory[SP[1]][SP[2]];
+		short val1=(short)( ((a)<<8) | (b) );
+		short val2=(short)( ((c)<<8) | (d) );
+		short sum = (short)(val1+val2);
+		byte a1 = (byte) sum;
+		byte a2 = (byte) (sum >> 8);
+		//reikia ikelt i memory
+		//reikia sumazint SP
+		
 	}
+	
 }
