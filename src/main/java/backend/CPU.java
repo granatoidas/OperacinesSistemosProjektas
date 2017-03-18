@@ -11,7 +11,7 @@ public class CPU {
 	@SuppressWarnings("unused")
 	private MemoryUnit ramClass;
 	protected Byte[][] ram;
-	
+
 	public Byte[] IC = { new Byte((byte) 0), new Byte((byte) 0) };
 	public Byte[] SP = { new Byte((byte) 0), new Byte((byte) 0) };
 
@@ -33,33 +33,6 @@ public class CPU {
 	}
 
 	// Place for methods describing instructions
-
-	public void ADD() {
-		Byte[] SPtmp = iterateRegister(SP, -3);
-		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -2);
-		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -1);
-		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be poslinkio
-		short val1 = (short) (((a) << 8) | (b));
-		short val2 = (short) (((c) << 8) | (d));
-		short sum = (short) (val1 + val2);
-		byte a1 = (byte) sum;
-		byte a2 = (byte) (sum >> 8);
-
-		SPtmp = iterateRegister(SP, -2);
-		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a1;
-		SPtmp = iterateRegister(SP, -1);
-		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
-
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
-		decrementTimer();
-
-	}
-	
-
 
 	private Byte[] iterateRegister(Byte[] reg, int stepsAmount) {
 		Byte[] naujas = { reg[0], reg[1] };
@@ -87,19 +60,45 @@ public class CPU {
 			TI--;
 		}
 	}
-	
-	public int hex(byte a){
+
+	public int hex(byte a) {
 		return Byte.toUnsignedInt(a);
 	}
 
-	public void SUB() {
+	public void ADD() {
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be poslinkio
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
+		short val1 = (short) (((a) << 8) | (b));
+		short val2 = (short) (((c) << 8) | (d));
+		short sum = (short) (val1 + val2);
+		byte a1 = (byte) sum;
+		byte a2 = (byte) (sum >> 8);
+
+		SPtmp = iterateRegister(SP, -2);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a1;
+		SPtmp = iterateRegister(SP, -1);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
+
+		SPtmp = iterateRegister(SP, -2);
+		SP = SPtmp;
+		decrementTimer();
+
+	}
+
+	public void SUB() {
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		Byte[] SPtmp = iterateRegister(SP, -3);
+		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateRegister(SP, -2);
+		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateRegister(SP, -1);
+		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 - val2);
@@ -111,19 +110,20 @@ public class CPU {
 		SPtmp = iterateRegister(SP, -1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
+		SPtmp = iterateRegister(this.SP, -2);
+		this.SP = SPtmp;
 		decrementTimer();
 	}
 
 	public void MUL() {
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be poslinkio
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 * val2);
@@ -135,19 +135,20 @@ public class CPU {
 		SPtmp = iterateRegister(SP, -1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
+		SPtmp = iterateRegister(this.SP, -2);
+		this.SP = SPtmp;
 		decrementTimer();
 	}
 
 	public void DIV() {
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be poslinkio
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 / val2);
@@ -159,19 +160,20 @@ public class CPU {
 		SPtmp = iterateRegister(SP, -1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
+		SPtmp = iterateRegister(this.SP, -2);
+		this.SP = SPtmp;
 		decrementTimer();
 	}
 
 	public void CMP() {
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be
 									// poslinkio
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
@@ -184,32 +186,35 @@ public class CPU {
 			rez = 0;
 		}
 
-		SPtmp = iterateRegister(SP, 1);
+		SPtmp = iterateRegister(this.SP, 1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = rez;
-		SP = SPtmp;
+		this.SP = SPtmp;
 		decrementTimer();
 	}
 
 	public void JPxy() {
+		Byte[] IC = MissingLink.hardwareMethods.pagingMechanism(this.IC);
 		Byte[] ICtmp = iterateRegister(IC, 1);
-		byte a = ram[ICtmp[1]][ICtmp[2]];
+		byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		ICtmp = iterateRegister(IC, 2);
-		byte b = ram[IC[1]][IC[2]];
-		IC[0] = a;
-		IC[1] = b;
+		byte b = ram[hex(IC[0])][hex(IC[1])];
+		this.IC[0] = a;
+		this.IC[1] = b;
 		decrementTimer();
 	}
 
 	public void JExy() {
-		byte tmp = ram[SP[1]][SP[2]];
-		if (tmp == 1){
+		Byte[] IC = MissingLink.hardwareMethods.pagingMechanism(this.IC);
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		byte tmp = ram[hex(SP[0])][hex(SP[1])];
+		if (tmp == 1) {
 			Byte[] ICtmp = iterateRegister(IC, 1);
-			byte a = ram[ICtmp[1]][ICtmp[2]];
+			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			ICtmp = iterateRegister(IC, 2);
-			byte b = ram[IC[1]][IC[2]];
-			IC[0] = a;
-			IC[1] = b;
-			SP = iterateRegister(SP, -1);
+			byte b = ram[hex(IC[0])][hex(IC[1])];
+			this.IC[0] = a;
+			this.IC[1] = b;
+			this.SP = iterateRegister(this.SP, -1);
 		}
 	}
 }
