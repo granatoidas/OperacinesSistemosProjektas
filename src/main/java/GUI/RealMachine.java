@@ -3,6 +3,9 @@ package GUI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import backend.MemoryUnit;
+import backend.MissingLink;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -10,6 +13,9 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Component;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class RealMachine extends JFrame {
@@ -36,7 +42,7 @@ public class RealMachine extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][grow][grow]", "[][grow][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][][grow]", "[][grow][][][][][][][][][][][][grow]"));
 		
 		JLabel lblRegisters = new JLabel("Registers");
 		contentPane.add(lblRegisters, "cell 0 0 2 1");
@@ -132,6 +138,14 @@ public class RealMachine extends JFrame {
 		SItextField.setEditable(false);
 		contentPane.add(SItextField, "cell 1 12,alignx left");
 		SItextField.setColumns(10);
+		
+		JButton btnRunSingleCycle = new JButton("Run Single Cycle");
+		btnRunSingleCycle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MissingLink.hardwareMethods.mainMachineCycle();
+			}
+		});
+		contentPane.add(btnRunSingleCycle, "cell 1 13");
 	}
 
 }
