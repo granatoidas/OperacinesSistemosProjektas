@@ -25,7 +25,7 @@ public class MissingLink {
 		
 		
 		ram = new MemoryUnit();
-		cpu = new CPU();
+		cpu = new CPU(ram);
 		
 		hardwareMethods = new HardwareMethods(cpu);
 		
