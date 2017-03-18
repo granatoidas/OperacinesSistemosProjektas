@@ -32,8 +32,6 @@ public class CPU {
 		this.ram = ram.memory;
 	}
 
-	// Place for methods describing instructions
-
 	private Byte[] iterateRegister(Byte[] reg, int stepsAmount) {
 		Byte[] naujas = { reg[0], reg[1] };
 		int stpAm = Math.abs(stepsAmount);
@@ -64,8 +62,25 @@ public class CPU {
 	public int hex(byte a) {
 		return Byte.toUnsignedInt(a);
 	}
+	
+	/**Return "real"/modified address. Return a copy of array so changing it
+	 * won't affect original.
+	 * @param addr
+	 * @return
+	 */
+	private Byte[] convertAddress(Byte[] addr){
+		if (MDR == 1)
+			return addr.clone();
+		return MissingLink.hardwareMethods.pagingMechanism(addr);
+	}
 
+	
+	////////////////////////////////////////////
+	// Place for methods describing instructions
+	////////////////////////////////////////////
+	
 	public void ADD() {
+		Byte[] SP = convertAddress(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
@@ -84,14 +99,13 @@ public class CPU {
 		SPtmp = iterateRegister(SP, -1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
+		SPtmp = iterateRegister(this.SP, -2);
+		this.SP = SPtmp;
 		decrementTimer();
-
 	}
 
 	public void SUB() {
-		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		Byte[] SP = convertAddress(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
@@ -116,7 +130,7 @@ public class CPU {
 	}
 
 	public void MUL() {
-		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		Byte[] SP = convertAddress(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
@@ -141,7 +155,7 @@ public class CPU {
 	}
 
 	public void DIV() {
-		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		Byte[] SP = convertAddress(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
@@ -166,7 +180,7 @@ public class CPU {
 	}
 
 	public void CMP() {
-		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		Byte[] SP = convertAddress(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
@@ -193,7 +207,7 @@ public class CPU {
 	}
 
 	public void JPxy() {
-		Byte[] IC = MissingLink.hardwareMethods.pagingMechanism(this.IC);
+		Byte[] IC = convertAddress(this.IC);
 		Byte[] ICtmp = iterateRegister(IC, 1);
 		byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		ICtmp = iterateRegister(IC, 2);
@@ -204,8 +218,8 @@ public class CPU {
 	}
 
 	public void JExy() {
-		Byte[] IC = MissingLink.hardwareMethods.pagingMechanism(this.IC);
-		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		Byte[] IC = convertAddress(this.IC);
+		Byte[] SP = convertAddress(this.SP);
 		byte tmp = ram[hex(SP[0])][hex(SP[1])];
 		if (tmp == 1) {
 			Byte[] ICtmp = iterateRegister(IC, 1);
@@ -216,5 +230,22 @@ public class CPU {
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
 		}
+	}
+	
+	public void LDxy(){
+		Byte[] IC = convertAddress(this.IC);
+		Byte[] SP = convertAddress(this.SP);
+		Byte[] ICtmp = iterateRegister(IC, 1);
+		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+		ICtmp = iterateRegister(IC, 2);
+		byte y = ram[hex(IC[0])][hex(IC[1])];
+		Byte[] xy = new Byte[2];
+		xy[0] = x;
+		xy[1] = y;
+		Byte[] xyPTR = convertAddress(xy);
+		Byte[] SPtmp = iterateRegister(SP, 1);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = ram[hex(xyPTR[0])][hex(xyPTR[1])];
+		this.SP = iterateRegister(this.SP, 1);
+		
 	}
 }
