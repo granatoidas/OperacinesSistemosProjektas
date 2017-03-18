@@ -229,6 +229,7 @@ public class CPU {
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
+			decrementTimer();
 		}
 	}
 	
@@ -246,6 +247,7 @@ public class CPU {
 		Byte[] SPtmp = iterateRegister(SP, 1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = ram[hex(xyPTR[0])][hex(xyPTR[1])];
 		this.SP = iterateRegister(this.SP, 1);
+		decrementTimer();
 		
 	}
 }
