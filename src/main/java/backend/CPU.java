@@ -146,5 +146,30 @@ public class CPU {
 		SPtmp = iterateRegister(SP, -2);
 		SP = SPtmp;		
 	}
+	
+	public void CMP(){
+		Byte[] SPtmp = iterateRegister(SP, -3);
+		byte a = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -2);
+		byte b = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -1);
+		byte c = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];		
+		byte d = MissingLink.ram.memory[SP[1]][SP[2]]; //SP nes imam be poslinkio
+		short val1=(short)( ((a)<<8) | (b) );
+		short val2=(short)( ((c)<<8) | (d) );
+		byte rez;
+		if(val1==val2){
+			rez = 1;
+		}else if(val1<val2){
+			rez = 2;
+		}else{
+			rez = 0;
+		}
+	
+		
+		SPtmp = iterateRegister(SP, 1);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = rez;
+		SP = SPtmp;		
+	}
 
 }
