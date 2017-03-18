@@ -62,23 +62,24 @@ public class CPU {
 	public int hex(byte a) {
 		return Byte.toUnsignedInt(a);
 	}
-	
-	/**Return "real"/modified address. Return a copy of array so changing it
+
+	/**
+	 * Return "real"/modified address. Return a copy of array so changing it
 	 * won't affect original.
+	 * 
 	 * @param addr
 	 * @return
 	 */
-	private Byte[] convertAddress(Byte[] addr){
+	private Byte[] convertAddress(Byte[] addr) {
 		if (MDR == 1)
 			return addr.clone();
 		return MissingLink.hardwareMethods.pagingMechanism(addr);
 	}
 
-	
 	////////////////////////////////////////////
 	// Place for methods describing instructions
 	////////////////////////////////////////////
-	
+
 	public void ADD() {
 		Byte[] SP = convertAddress(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
@@ -229,10 +230,11 @@ public class CPU {
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
+			decrementTimer();
 		}
 	}
-	
-	public void LDxy(){
+
+	public void LDxy() {
 		Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
 		Byte[] ICtmp = iterateRegister(IC, 1);
@@ -246,6 +248,22 @@ public class CPU {
 		Byte[] SPtmp = iterateRegister(SP, 1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = ram[hex(xyPTR[0])][hex(xyPTR[1])];
 		this.SP = iterateRegister(this.SP, 1);
-		
+		decrementTimer();
+	}
+
+	public void PTxy() {
+		Byte[] IC = convertAddress(this.IC);
+		Byte[] SP = convertAddress(this.SP);
+		Byte[] ICtmp = iterateRegister(IC, 1);
+		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+		ICtmp = iterateRegister(IC, 2);
+		byte y = ram[hex(IC[0])][hex(IC[1])];
+		Byte[] xy = new Byte[2];
+		xy[0] = x;
+		xy[1] = y;
+		Byte[] xyPTR = convertAddress(xy);
+		ram[hex(xyPTR[0])][hex(xyPTR[1])] = ram[hex(SP[0])][hex(SP[1])];
+		this.SP = iterateRegister(this.SP, -1);
+		decrementTimer();
 	}
 }
