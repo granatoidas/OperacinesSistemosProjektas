@@ -28,6 +28,6 @@ public class CPU {
 	
 	//Place for methods describing instructions
 	public void ADD(){
-		
+		// veliau pridesiu komandas
 	}
 }
