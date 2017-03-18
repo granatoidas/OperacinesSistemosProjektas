@@ -27,4 +27,7 @@ public class CPU {
 	}
 	
 	//Place for methods describing instructions
+	public void ADD(){
+		
+	}
 }
