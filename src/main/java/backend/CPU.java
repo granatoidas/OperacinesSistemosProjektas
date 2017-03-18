@@ -236,7 +236,32 @@ public class CPU {
 			SP = iterateRegister(SP, -1);
 		}
 	}
+
 	public void STOP() {
 		PI = 5;
+	}
+
+	public void CHNG_S() {
+		MDR = 1;
+		TI = 50;
+		// reikia issaugoti IC i adresa
+		// reikia issaugoti SP i adresa
+		IC[0] = 00;
+		IC[1] = 00;
+		SP[0] = 13;
+		SP[1] = 00;
+	}
+
+	public void CHNG_U() {
+		if (MDR == 0){
+			SI = 2;
+			return;
+		}
+		MDR = 0;
+		TI = 50;
+		IC[0] = 00;
+		IC[1] = 00;
+		SP[0] = 13;
+		SP[1] = 00;
 	}
 }
