@@ -19,14 +19,14 @@ import GUI.RealMachine;
  */
 public class MissingLink {
 	public static CPU cpu;
-	public static RAM ram;
+	public static MemoryUnit ram;
 	public static RealMachine frame;
 
 	public MissingLink() {
 		frame = new RealMachine();
 		frame.setVisible(true);
 		cpu = new CPU();
-		ram = new RAM();
+		ram = new MemoryUnit();
 		setUpRamTable();
 
 		ram.memory[0][0] = new Byte((byte) 0xFF);

@@ -33,7 +33,7 @@ public class RowNumberTable extends JTable
 		addColumn( column );
 		column.setCellRenderer(new RowNumberRenderer());
 
-		getColumnModel().getColumn(0).setPreferredWidth(50);
+		getColumnModel().getColumn(0).setPreferredWidth(40);
 		setPreferredScrollableViewportSize(getPreferredSize());
 	}
 
@@ -82,7 +82,7 @@ public class RowNumberTable extends JTable
 	@Override
 	public Object getValueAt(int row, int column)
 	{
-		return Integer.toString(row);
+		return Integer.toHexString(row);
 	}
 
 	/*
