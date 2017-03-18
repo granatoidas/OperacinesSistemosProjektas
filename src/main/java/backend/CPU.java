@@ -27,7 +27,7 @@ public class CPU {
 	public CPU() {
 		System.out.println(Arrays.toString(IC));
 	}
-<<<<<<< HEAD
+
 	
 	//Place for methods describing instructions
 	
@@ -47,12 +47,7 @@ public class CPU {
 		
 	}
 	
-=======
 
-	// Place for methods describing instructions
-	public void ADD() {
-		// veliau pridesiu komandas
-	}
 
 	private Byte[] iterateRegister(Byte[] reg, int stepsAmount) {
 		Byte[] naujas = { reg[0], reg[1] };
@@ -74,5 +69,5 @@ public class CPU {
 		}
 		return naujas;
 	}
->>>>>>> 8cbbf7e28449728f68d1c229ed730fa9a6c1feb0
+
 }
