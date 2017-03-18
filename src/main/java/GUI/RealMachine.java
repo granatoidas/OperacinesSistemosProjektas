@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Component;
 
+@SuppressWarnings("serial")
 public class RealMachine extends JFrame {
 
 	public JPanel contentPane;

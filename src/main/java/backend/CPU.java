@@ -2,6 +2,10 @@ package backend;
 
 import java.util.Arrays;
 
+/**Contains methods describing each instruction
+ * @author grant
+ *
+ */
 public class CPU {
 	public Byte[] IC = { new Byte((byte) 0), new Byte((byte) 0) };
 	public Byte[] SP = { new Byte((byte) 0), new Byte((byte) 0) };
@@ -21,4 +25,6 @@ public class CPU {
 	public CPU() {
 		System.out.println(Arrays.toString(IC));
 	}
+	
+	//Place for methods describing instructions
 }
