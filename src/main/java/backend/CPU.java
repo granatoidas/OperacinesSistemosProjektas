@@ -2,7 +2,9 @@ package backend;
 
 import java.util.Arrays;
 
-/**Contains methods describing each instruction
+/**
+ * Contains methods describing each instruction
+ * 
  * @author grant
  *
  */
@@ -25,6 +27,7 @@ public class CPU {
 	public CPU() {
 		System.out.println(Arrays.toString(IC));
 	}
+<<<<<<< HEAD
 	
 	//Place for methods describing instructions
 	
@@ -44,4 +47,32 @@ public class CPU {
 		
 	}
 	
+=======
+
+	// Place for methods describing instructions
+	public void ADD() {
+		// veliau pridesiu komandas
+	}
+
+	private Byte[] iterateRegister(Byte[] reg, int stepsAmount) {
+		Byte[] naujas = { reg[0], reg[1] };
+		int stpAm = Math.abs(stepsAmount);
+		for (int i = 0; i < stpAm; i++) {
+			if (stepsAmount > 0) {
+				if (++naujas[1] == 0x00){
+					if(++naujas[0] == 16 && MDR == 0){
+						naujas[0] = 0;
+					}
+				}
+			} else {
+				if (--naujas[1] == 0xFF){
+					if(--naujas[0] == 0xFF && MDR == 0){
+						naujas[0] = 15;
+					}
+				}
+			}
+		}
+		return naujas;
+	}
+>>>>>>> 8cbbf7e28449728f68d1c229ed730fa9a6c1feb0
 }
