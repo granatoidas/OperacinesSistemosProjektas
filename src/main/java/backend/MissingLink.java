@@ -56,7 +56,7 @@ public class MissingLink {
 			public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 				try {
 					String d = (String) aValue;
-					data[rowIndex][columnIndex] = Byte.parseByte(d);
+					data[rowIndex][columnIndex] = (byte)Integer.parseInt(d, 16);
 				} catch(Exception e){}
 			}
 			
