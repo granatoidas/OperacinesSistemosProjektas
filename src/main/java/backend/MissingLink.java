@@ -40,7 +40,7 @@ public class MissingLink {
 
 			@Override
 			public Object getValueAt(int rowIndex, int columnIndex) {
-				return data[rowIndex][columnIndex];
+				return Integer.toHexString(Byte.toUnsignedInt(data[rowIndex][columnIndex]));
 			}
 
 			@Override
