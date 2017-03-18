@@ -9,15 +9,102 @@ public class HardwareMethods {
 	}
 
 	public void mainMachineCycle() {
-		if(cpu.TI == 0){
-			
+		if (cpu.TI == 0) {
+
 		}
-		if(cpu.MDR == 1){
-			
+		//instruction Location
+		Byte[] iL = pagingMechanism(cpu.IC);
+		Byte instruction = cpu.ram[cpu.hex(iL[0])][cpu.hex(iL[1])];
+		executeInstruction(instruction);
+	}
+
+	/**
+	 * Calls instruction according to the code passed to it
+	 * 
+	 * @param instruction
+	 *            code of the instruction
+	 */
+	private void executeInstruction(Byte instruction) {
+		switch (instruction) {
+		case 0:
+
+			break;
+		case 1:
+
+			break;
+		case 2:
+
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		case 5:
+
+			break;
+		case 6:
+
+			break;
+		case 7:
+
+			break;
+		case 8:
+
+			break;
+		case 9:
+
+			break;
+		case 10:
+
+			break;
+		case 11:
+
+			break;
+		case 12:
+
+			break;
+		case 13:
+
+			break;
+		case 14:
+
+			break;
+		case 15:
+
+			break;
+		case 16:
+
+			break;
+		default:
+			cpu.SI = 2;
 		}
 	}
-	
-	private void pagingMechanism(){
-		
+
+	/**
+	 * Calls pagingMechanism and uses current CPU PTR as second parameter
+	 * 
+	 * @param reg
+	 * @return
+	 */
+	private Byte[] pagingMechanism(Byte[] reg) {
+		return pagingMechanism(reg, cpu.PTR);
+	}
+
+	/**
+	 * Convert 2 byte address according to which virtual machine is used (PTR)
+	 * value.
+	 * 
+	 * @param reg
+	 *            2 element size array representing register
+	 * @param PTR
+	 *            byte representing PTR value
+	 * @return changed register
+	 */
+	private Byte[] pagingMechanism(Byte[] reg, Byte PTR) {
+		Byte[] newReg = { (byte) 00, reg[1] };
+		newReg[0] = (byte) (16*PTR + Byte.toUnsignedInt(reg[0]));
+		return newReg;
 	}
 }
