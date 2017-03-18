@@ -12,7 +12,7 @@ public class CPU {
 
 	private MemoryUnit ramClass;
 	protected Byte[][] ram;
-	
+
 	public Byte[] IC = { new Byte((byte) 0), new Byte((byte) 0) };
 	public Byte[] SP = { new Byte((byte) 0), new Byte((byte) 0) };
 
@@ -59,8 +59,6 @@ public class CPU {
 		decrementTimer();
 
 	}
-	
-
 
 	private Byte[] iterateRegister(Byte[] reg, int stepsAmount) {
 		Byte[] naujas = { reg[0], reg[1] };
@@ -88,8 +86,8 @@ public class CPU {
 			TI--;
 		}
 	}
-	
-	public int hex(byte a){
+
+	public int hex(byte a) {
 		return Byte.toUnsignedInt(a);
 	}
 
@@ -203,7 +201,7 @@ public class CPU {
 
 	public void JExy() {
 		byte tmp = ram[SP[1]][SP[2]];
-		if (tmp == 1){
+		if (tmp == 1) {
 			Byte[] ICtmp = iterateRegister(IC, 1);
 			byte a = ram[ICtmp[1]][ICtmp[2]];
 			ICtmp = iterateRegister(IC, 2);
@@ -212,5 +210,34 @@ public class CPU {
 			IC[1] = b;
 			SP = iterateRegister(SP, -1);
 		}
+	}
+
+	public void JLxy() {
+		byte tmp = ram[SP[1]][SP[2]];
+		if (tmp == 0) {
+			Byte[] ICtmp = iterateRegister(IC, 1);
+			byte a = ram[ICtmp[1]][ICtmp[2]];
+			ICtmp = iterateRegister(IC, 2);
+			byte b = ram[IC[1]][IC[2]];
+			IC[0] = a;
+			IC[1] = b;
+			SP = iterateRegister(SP, -1);
+		}
+	}
+
+	public void JGxy() {
+		byte tmp = ram[SP[1]][SP[2]];
+		if (tmp == 2) {
+			Byte[] ICtmp = iterateRegister(IC, 1);
+			byte a = ram[ICtmp[1]][ICtmp[2]];
+			ICtmp = iterateRegister(IC, 2);
+			byte b = ram[IC[1]][IC[2]];
+			IC[0] = a;
+			IC[1] = b;
+			SP = iterateRegister(SP, -1);
+		}
+	}
+	public void STOP() {
+		PI = 5;
 	}
 }
