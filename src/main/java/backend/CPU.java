@@ -58,6 +58,8 @@ public class CPU {
 		decrementTimer();
 
 	}
+	
+
 
 	private Byte[] iterateRegister(Byte[] reg, int stepsAmount) {
 		Byte[] naujas = { reg[0], reg[1] };
@@ -90,14 +92,40 @@ public class CPU {
 		return Byte.toUnsignedInt(a);
 	}
 
-	public void SUB() {
+	public void ADD() {
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be poslinkio
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
+		short val1 = (short) (((a) << 8) | (b));
+		short val2 = (short) (((c) << 8) | (d));
+		short sum = (short) (val1 + val2);
+		byte a1 = (byte) sum;
+		byte a2 = (byte) (sum >> 8);
+
+		SPtmp = iterateRegister(SP, -2);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a1;
+		SPtmp = iterateRegister(SP, -1);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
+
+		SPtmp = iterateRegister(SP, -2);
+		SP = SPtmp;
+		decrementTimer();
+
+	}
+
+	public void SUB() {
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		Byte[] SPtmp = iterateRegister(SP, -3);
+		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateRegister(SP, -2);
+		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateRegister(SP, -1);
+		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 - val2);
@@ -109,19 +137,20 @@ public class CPU {
 		SPtmp = iterateRegister(SP, -1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
+		SPtmp = iterateRegister(this.SP, -2);
+		this.SP = SPtmp;
 		decrementTimer();
 	}
 
 	public void MUL() {
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be poslinkio
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 * val2);
@@ -133,19 +162,20 @@ public class CPU {
 		SPtmp = iterateRegister(SP, -1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
+		SPtmp = iterateRegister(this.SP, -2);
+		this.SP = SPtmp;
 		decrementTimer();
 	}
 
 	public void DIV() {
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be poslinkio
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 / val2);
@@ -157,19 +187,20 @@ public class CPU {
 		SPtmp = iterateRegister(SP, -1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
+		SPtmp = iterateRegister(this.SP, -2);
+		this.SP = SPtmp;
 		decrementTimer();
 	}
 
 	public void CMP() {
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be
+		byte d = ram[SP[0]][SP[1]]; // SP nes imam be
 									// poslinkio
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
@@ -182,86 +213,35 @@ public class CPU {
 			rez = 0;
 		}
 
-		SPtmp = iterateRegister(SP, 1);
+		SPtmp = iterateRegister(this.SP, 1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = rez;
-		SP = SPtmp;
+		this.SP = SPtmp;
 		decrementTimer();
 	}
 
 	public void JPxy() {
+		Byte[] IC = MissingLink.hardwareMethods.pagingMechanism(this.IC);
 		Byte[] ICtmp = iterateRegister(IC, 1);
-		byte a = ram[ICtmp[1]][ICtmp[2]];
+		byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		ICtmp = iterateRegister(IC, 2);
-		byte b = ram[IC[1]][IC[2]];
-		IC[0] = a;
-		IC[1] = b;
+		byte b = ram[hex(IC[0])][hex(IC[1])];
+		this.IC[0] = a;
+		this.IC[1] = b;
 		decrementTimer();
 	}
 
 	public void JExy() {
-		byte tmp = ram[SP[1]][SP[2]];
+		Byte[] IC = MissingLink.hardwareMethods.pagingMechanism(this.IC);
+		Byte[] SP = MissingLink.hardwareMethods.pagingMechanism(this.SP);
+		byte tmp = ram[hex(SP[0])][hex(SP[1])];
 		if (tmp == 1) {
 			Byte[] ICtmp = iterateRegister(IC, 1);
-			byte a = ram[ICtmp[1]][ICtmp[2]];
+			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			ICtmp = iterateRegister(IC, 2);
-			byte b = ram[IC[1]][IC[2]];
-			IC[0] = a;
-			IC[1] = b;
-			SP = iterateRegister(SP, -1);
+			byte b = ram[hex(IC[0])][hex(IC[1])];
+			this.IC[0] = a;
+			this.IC[1] = b;
+			this.SP = iterateRegister(this.SP, -1);
 		}
-	}
-
-	public void JLxy() {
-		byte tmp = ram[SP[1]][SP[2]];
-		if (tmp == 0) {
-			Byte[] ICtmp = iterateRegister(IC, 1);
-			byte a = ram[ICtmp[1]][ICtmp[2]];
-			ICtmp = iterateRegister(IC, 2);
-			byte b = ram[IC[1]][IC[2]];
-			IC[0] = a;
-			IC[1] = b;
-			SP = iterateRegister(SP, -1);
-		}
-	}
-
-	public void JGxy() {
-		byte tmp = ram[SP[1]][SP[2]];
-		if (tmp == 2) {
-			Byte[] ICtmp = iterateRegister(IC, 1);
-			byte a = ram[ICtmp[1]][ICtmp[2]];
-			ICtmp = iterateRegister(IC, 2);
-			byte b = ram[IC[1]][IC[2]];
-			IC[0] = a;
-			IC[1] = b;
-			SP = iterateRegister(SP, -1);
-		}
-	}
-
-	public void STOP() {
-		PI = 5;
-	}
-
-	public void CHNG_S() {
-		MDR = 1;
-		TI = 50;
-		// reikia issaugoti IC i adresa
-		// reikia issaugoti SP i adresa
-		IC[0] = 00;
-		IC[1] = 00;
-		SP[0] = 13;
-		SP[1] = 00;
-	}
-
-	public void CHNG_U() {
-		if (MDR == 0){
-			SI = 2;
-			return;
-		}
-		MDR = 0;
-		TI = 50;
-		IC[0] = 00;
-		IC[1] = 00;
-		SP[0] = 13;
-		SP[1] = 00;
 	}
 }
