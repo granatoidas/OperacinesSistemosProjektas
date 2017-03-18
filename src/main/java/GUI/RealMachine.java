@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import backend.CPU;
 import backend.MissingLink;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -250,7 +251,7 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.SI = bytes[0];
 				} else {
 					MissingLink.cpu.SI = 00;
-					SItextField.setText("00");
+					SItextField.setText("0");
 				}
 			}
 		});
@@ -268,5 +269,18 @@ public class RealMachine extends JFrame {
 			bytes = new Byte[]{};
 		}
 		return bytes;
+	}
+	
+	public void refreshData(){
+		PTRtextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.PTR)));
+		ICtextField.setText("0000");
+		SPtextField.setText("0000");
+		CDRtextField.setText("0000000000");
+		ARtextField.setText("00000000");
+		MDRtextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.MDR)));
+		TItextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.TI)));
+		PItextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.PI)));
+		SItextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.SI)));
+		RAMtable.repaint();
 	}
 }

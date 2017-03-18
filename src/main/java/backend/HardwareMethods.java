@@ -16,6 +16,9 @@ public class HardwareMethods {
 		Byte[] iL = pagingMechanism(cpu.IC);
 		Byte instruction = cpu.ram[cpu.hex(iL[0])][cpu.hex(iL[1])];
 		executeInstruction(instruction);
+		
+		
+		MissingLink.frame.refreshData();
 	}
 
 	/**
@@ -27,7 +30,8 @@ public class HardwareMethods {
 	private void executeInstruction(Byte instruction) {
 		switch (instruction) {
 		case 0:
-
+			cpu.PTR = 20;
+			cpu.ram[10][10] = 0x40;
 			break;
 		case 1:
 
