@@ -31,20 +31,28 @@ public class CPU {
 	
 	//Place for methods describing instructions
 	
-	//reikia busenu patikrinimo
+	
 	public void ADD(){
-		byte a = MissingLink.ram.memory[SP[1]][SP[2]-3];
-		byte b = MissingLink.ram.memory[SP[1]][SP[2]-2];
-		byte c = MissingLink.ram.memory[SP[1]][SP[2]-1];
-		byte d = MissingLink.ram.memory[SP[1]][SP[2]];
+		Byte[] SPtmp = iterateRegister(SP, -3);
+		byte a = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -2);
+		byte b = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -1);
+		byte c = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];		
+		byte d = MissingLink.ram.memory[SP[1]][SP[2]]; //SP nes imam be poslinkio
 		short val1=(short)( ((a)<<8) | (b) );
 		short val2=(short)( ((c)<<8) | (d) );
 		short sum = (short)(val1+val2);
 		byte a1 = (byte) sum;
 		byte a2 = (byte) (sum >> 8);
-		//reikia ikelt i memory
-		//reikia sumazint SP
 		
+		SPtmp = iterateRegister(SP, -2);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = a1;
+		SPtmp = iterateRegister(SP, -1);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = a2;
+		
+		SPtmp = iterateRegister(SP, -2);
+		SP = SPtmp;		
 	}
 	
 
@@ -68,6 +76,75 @@ public class CPU {
 			}
 		}
 		return naujas;
+	}
+	
+	public void SUB(){
+		Byte[] SPtmp = iterateRegister(SP, -3);
+		byte a = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -2);
+		byte b = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -1);
+		byte c = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];		
+		byte d = MissingLink.ram.memory[SP[1]][SP[2]]; //SP nes imam be poslinkio
+		short val1=(short)( ((a)<<8) | (b) );
+		short val2=(short)( ((c)<<8) | (d) );
+		short sum = (short)(val1-val2);
+		byte a1 = (byte) sum;
+		byte a2 = (byte) (sum >> 8);
+		
+		SPtmp = iterateRegister(SP, -2);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = a1;
+		SPtmp = iterateRegister(SP, -1);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = a2;
+		
+		SPtmp = iterateRegister(SP, -2);
+		SP = SPtmp;		
+	}
+	
+	public void MUL(){
+		Byte[] SPtmp = iterateRegister(SP, -3);
+		byte a = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -2);
+		byte b = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -1);
+		byte c = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];		
+		byte d = MissingLink.ram.memory[SP[1]][SP[2]]; //SP nes imam be poslinkio
+		short val1=(short)( ((a)<<8) | (b) );
+		short val2=(short)( ((c)<<8) | (d) );
+		short sum = (short)(val1*val2);
+		byte a1 = (byte) sum;
+		byte a2 = (byte) (sum >> 8);
+		
+		SPtmp = iterateRegister(SP, -2);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = a1;
+		SPtmp = iterateRegister(SP, -1);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = a2;
+		
+		SPtmp = iterateRegister(SP, -2);
+		SP = SPtmp;		
+	}
+	
+	public void DIV(){
+		Byte[] SPtmp = iterateRegister(SP, -3);
+		byte a = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -2);
+		byte b = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];
+		SPtmp = iterateRegister(SP, -1);
+		byte c = MissingLink.ram.memory[SPtmp[1]][SPtmp[2]];		
+		byte d = MissingLink.ram.memory[SP[1]][SP[2]]; //SP nes imam be poslinkio
+		short val1=(short)( ((a)<<8) | (b) );
+		short val2=(short)( ((c)<<8) | (d) );
+		short sum = (short)(val1/val2);
+		byte a1 = (byte) sum;
+		byte a2 = (byte) (sum >> 8);
+		
+		SPtmp = iterateRegister(SP, -2);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = a1;
+		SPtmp = iterateRegister(SP, -1);
+		MissingLink.ram.memory[SPtmp[1]][SPtmp[2]] = a2;
+		
+		SPtmp = iterateRegister(SP, -2);
+		SP = SPtmp;		
 	}
 
 }
