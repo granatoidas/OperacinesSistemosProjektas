@@ -34,33 +34,6 @@ public class CPU {
 
 	// Place for methods describing instructions
 
-	public void ADD() {
-		Byte[] SPtmp = iterateRegister(SP, -3);
-		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -2);
-		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -1);
-		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[1]][SP[2]]; // SP nes imam be poslinkio
-		short val1 = (short) (((a) << 8) | (b));
-		short val2 = (short) (((c) << 8) | (d));
-		short sum = (short) (val1 + val2);
-		byte a1 = (byte) sum;
-		byte a2 = (byte) (sum >> 8);
-
-		SPtmp = iterateRegister(SP, -2);
-		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a1;
-		SPtmp = iterateRegister(SP, -1);
-		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
-
-		SPtmp = iterateRegister(SP, -2);
-		SP = SPtmp;
-		decrementTimer();
-
-	}
-	
-
-
 	private Byte[] iterateRegister(Byte[] reg, int stepsAmount) {
 		Byte[] naujas = { reg[0], reg[1] };
 		int stpAm = Math.abs(stepsAmount);
