@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class CPU {
 	
 	private MemoryUnit ramClass;
-	private Byte[][] ram;
+	protected Byte[][] ram;
 	
 	public Byte[] IC = { new Byte((byte) 0), new Byte((byte) 0) };
 	public Byte[] SP = { new Byte((byte) 0), new Byte((byte) 0) };
