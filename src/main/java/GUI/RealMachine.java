@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
 
 @SuppressWarnings("serial")
 public class RealMachine extends JFrame {
@@ -36,16 +37,19 @@ public class RealMachine extends JFrame {
 	public JScrollPane scrollPane;
 	public JTable RAMtable;
 
+	public JPanel inputPanel;
+	public JPanel outputPanel;
+
 	/**
 	 * Create the frame.
 	 */
 	public RealMachine() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 150, 640, 480);
+		setBounds(300, 150, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][grow]", "[][][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][][grow]", "[][][][][][][][][][][][][][][grow][grow]"));
 
 		JLabel lblRegisters = new JLabel("Registers (nr bytes)");
 		contentPane.add(lblRegisters, "cell 0 0 2 1");
@@ -140,6 +144,14 @@ public class RealMachine extends JFrame {
 		});
 		contentPane.add(btnRunSingleCycle, "cell 1 13");
 
+		outputPanel = new IOWindow(true);
+		outputPanel.setMinimumSize(new Dimension(136, 120));
+		contentPane.add(outputPanel, "cell 0 15 2 1,grow");
+
+		inputPanel = new IOWindow(false);
+		inputPanel.setMinimumSize(new Dimension(144, 120));
+		contentPane.add(inputPanel, "cell 2 15,grow");
+
 		initTextFields();
 		initActionListeners();
 	}
@@ -154,7 +166,7 @@ public class RealMachine extends JFrame {
 		TItextField.setText("|00|");
 		PItextField.setText("|00|");
 		SItextField.setText("|00|");
-		
+
 		PTRtextField.getDocument().addDocumentListener(new CustomDocumentListener(PTRtextField));
 		ICtextField.getDocument().addDocumentListener(new CustomDocumentListener(ICtextField));
 		SPtextField.getDocument().addDocumentListener(new CustomDocumentListener(SPtextField));
@@ -164,11 +176,11 @@ public class RealMachine extends JFrame {
 		TItextField.getDocument().addDocumentListener(new CustomDocumentListener(TItextField));
 		PItextField.getDocument().addDocumentListener(new CustomDocumentListener(PItextField));
 		SItextField.getDocument().addDocumentListener(new CustomDocumentListener(SItextField));
-		
+
 		setTextFieldsColor();
 	}
-	
-	private void setTextFieldsColor(){
+
+	private void setTextFieldsColor() {
 		PTRtextField.setBackground(Color.GREEN);
 		ICtextField.setBackground(Color.GREEN);
 		SPtextField.setBackground(Color.GREEN);
@@ -312,9 +324,9 @@ public class RealMachine extends JFrame {
 		TItextField.setText(formStringForByteArr(MissingLink.cpu.TI));
 		PItextField.setText(formStringForByteArr(MissingLink.cpu.PI));
 		SItextField.setText(formStringForByteArr(MissingLink.cpu.SI));
-		
+
 		setTextFieldsColor();
-		
+
 		RAMtable.repaint();
 	}
 

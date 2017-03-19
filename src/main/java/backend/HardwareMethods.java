@@ -166,7 +166,7 @@ public class HardwareMethods {
 	private void create_HDD_GUI() {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(300 + 640, 150, 640, 480);
+		frame.setBounds(300 + 800, 150, 640, 480);
 		frame.setTitle("External Memory (HDD)");
 
 		JScrollPane scrollPane = new JScrollPane();
