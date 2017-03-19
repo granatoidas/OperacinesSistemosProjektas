@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.table.AbstractTableModel;
 
-import backend.MissingLink;
+import backend.Utilities;
 
 public class CustomTableModel extends AbstractTableModel {
 
@@ -16,7 +16,7 @@ public class CustomTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return MissingLink.getByteAsHex(data[rowIndex][columnIndex]);
+		return Utilities.getByteAsHex(data[rowIndex][columnIndex]);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class CustomTableModel extends AbstractTableModel {
 
 	@Override
 	public String getColumnName(int column) {
-		return MissingLink.getByteAsHex((byte) column);
+		return Utilities.getByteAsHex((byte) column);
 	}
 
 	@Override

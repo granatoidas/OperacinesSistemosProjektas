@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import backend.MissingLink;
+import backend.Utilities;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -324,7 +325,7 @@ public class RealMachine extends JFrame {
 	private String formStringForByteArr(Byte[] bytes) {
 		String a = "|";
 		for (Byte b : bytes) {
-			a += MissingLink.getByteAsHex(b) + "|";
+			a += Utilities.getByteAsHex(b) + "|";
 		}
 		return a;
 	}

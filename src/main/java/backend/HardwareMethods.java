@@ -131,6 +131,13 @@ public class HardwareMethods {
 	}
 
 	/**
+	 * This is the code of channel device
+	 */
+	public void CD() {
+
+	}
+
+	/**
 	 * Calls pagingMechanism and uses current CPU PTR as second parameter
 	 * 
 	 * @param reg
@@ -155,13 +162,13 @@ public class HardwareMethods {
 		newReg[0] = (byte) (16 * PTR + Byte.toUnsignedInt(reg[0]));
 		return newReg;
 	}
-	
-	private void create_HDD_GUI(){
+
+	private void create_HDD_GUI() {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(300+640, 150, 640, 480);
+		frame.setBounds(300 + 640, 150, 640, 480);
 		frame.setTitle("External Memory (HDD)");
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -177,10 +184,10 @@ public class HardwareMethods {
 		JTable rowTable = new RowNumberTable(HDDtable);
 		scrollPane.setRowHeaderView(rowTable);
 		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER, rowTable.getTableHeader());
-		
+
 		HDDtable.setModel(new CustomTableModel(hdd));
-		
-		MissingLink.resizeColumnWidth(HDDtable);
-		frame.setVisible(true);		
+
+		Utilities.resizeColumnWidth(HDDtable);
+		frame.setVisible(true);
 	}
 }
