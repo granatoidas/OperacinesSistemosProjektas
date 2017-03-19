@@ -12,12 +12,11 @@ public class HardwareMethods {
 		if (cpu.TI == 0) {
 
 		}
-		//instruction Location
+		// instruction Location
 		Byte[] iL = pagingMechanism(cpu.IC);
 		Byte instruction = cpu.ram[cpu.hex(iL[0])][cpu.hex(iL[1])];
 		executeInstruction(instruction);
-		
-		
+
 		MissingLink.frame.refreshData();
 	}
 
@@ -29,57 +28,86 @@ public class HardwareMethods {
 	 */
 	private void executeInstruction(Byte instruction) {
 		switch (instruction) {
-		case 0:
-			cpu.PTR = 20;
-			cpu.ram[10][10] = 0x40;
+		case 0x00:
+			// cpu.CHNG_S();
 			break;
-		case 1:
-
+		case 0x01:
+			cpu.ADD();
 			break;
-		case 2:
-
+		case 0x02:
+			cpu.SUB();
 			break;
-		case 3:
-
+		case 0x03:
+			cpu.MUL();
 			break;
-		case 4:
-
+		case 0x04:
+			cpu.DIV();
 			break;
-		case 5:
-
+		case 0x05:
+			cpu.CMP();
 			break;
-		case 6:
-
+		case 0x06:
+			cpu.JPxy();
 			break;
-		case 7:
-
+		case 0x07:
+			cpu.JExy();
 			break;
-		case 8:
-
+		case 0x08:
+			// cpu.JLxy();
 			break;
-		case 9:
-
+		case 0x09:
+			// cpu.JGxy();
 			break;
-		case 10:
-
+		case 0x0A:
+			// cpu.STOP();
 			break;
-		case 11:
-
+		case 0x0B:
+			cpu.LDxy();
 			break;
-		case 12:
-
+		case 0x0C:
+			cpu.PTxy();
 			break;
-		case 13:
-
+		case 0x0D:
+			// cpu.PUNx();
 			break;
-		case 14:
-
+		case 0x0E:
+			// cpu.PUSx();
 			break;
-		case 15:
-
+		case 0x0F:
+			// cpu.PRINT();
 			break;
-		case 16:
-
+		case 0x10:
+			// cpu.READ();
+			break;
+		case 0x11:
+			// cpu.PRINT_E();
+			break;
+		case 0x12:
+			// cpu.READ_E();
+			break;
+		case 0x13:
+			// cpu.SET_AR();
+			break;
+		case 0x14:
+			// cpu.GET_AR();
+			break;
+		case 0x15:
+			// cpu.INICD();
+			break;
+		case 0x16:
+			// cpu.CHNG_S();
+			break;
+		case 0x17:
+			// cpu.SET_PTR();
+			break;
+		case 0x18:
+			// cpu.SET_TI();
+			break;
+		case 0x19:
+			// cpu.SET_PI();
+			break;
+		case 0x1A:
+			// cpu.SET_CDR();
 			break;
 		default:
 			cpu.SI = 2;
@@ -108,7 +136,7 @@ public class HardwareMethods {
 	 */
 	private Byte[] pagingMechanism(Byte[] reg, Byte PTR) {
 		Byte[] newReg = { (byte) 00, reg[1] };
-		newReg[0] = (byte) (16*PTR + Byte.toUnsignedInt(reg[0]));
+		newReg[0] = (byte) (16 * PTR + Byte.toUnsignedInt(reg[0]));
 		return newReg;
 	}
 }
