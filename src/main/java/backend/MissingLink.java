@@ -22,13 +22,12 @@ public class MissingLink {
 	public MissingLink() {
 		frame = new RealMachine();
 		frame.setVisible(true);
-		
-		
+
 		ram = new MemoryUnit();
 		cpu = new CPU(ram);
-		
+
 		hardwareMethods = new HardwareMethods(cpu);
-		
+
 		setUpRamTable();
 	}
 
@@ -39,7 +38,7 @@ public class MissingLink {
 
 			@Override
 			public Object getValueAt(int rowIndex, int columnIndex) {
-				return Integer.toHexString(Byte.toUnsignedInt(data[rowIndex][columnIndex]));
+				return getByteAsHex(data[rowIndex][columnIndex]);
 			}
 
 			@Override
@@ -56,17 +55,18 @@ public class MissingLink {
 			public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 				try {
 					String d = (String) aValue;
-					data[rowIndex][columnIndex] = (byte)Integer.parseInt(d, 16);
-				} catch(Exception e){}
+					data[rowIndex][columnIndex] = (byte) Integer.parseInt(d, 16);
+				} catch (Exception e) {
+				}
 			}
-			
+
 			@Override
-			public String getColumnName(int column){
-				return Integer.toHexString(column);
+			public String getColumnName(int column) {
+				return getByteAsHex((byte) column);
 			}
-			
+
 			@Override
-			public boolean isCellEditable(int rowIndex, int columnIndex){
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
 				return true;
 			}
 		};
@@ -84,5 +84,13 @@ public class MissingLink {
 			columnModel.getColumn(column).setMaxWidth(25);
 			columnModel.getColumn(column).setWidth(25);
 		}
+	}
+
+	public static String getByteAsHex(Byte b) {
+		String a = Integer.toHexString(Byte.toUnsignedInt(b)).toUpperCase();
+		if (a.length() == 1) {
+			a = "0" + a;
+		}
+		return a;
 	}
 }

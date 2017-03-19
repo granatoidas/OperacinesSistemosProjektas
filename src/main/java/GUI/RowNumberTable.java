@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
+import backend.MissingLink;
+
 /*
  *	Use a JTable as a renderer for row numbers of a given main table.
  *  This table must be added to the row header of the scrollpane that
@@ -82,7 +84,7 @@ public class RowNumberTable extends JTable
 	@Override
 	public Object getValueAt(int row, int column)
 	{
-		return Integer.toHexString(row);
+		return MissingLink.getByteAsHex((byte) row);
 	}
 
 	/*

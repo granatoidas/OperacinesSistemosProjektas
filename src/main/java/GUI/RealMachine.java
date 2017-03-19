@@ -138,21 +138,21 @@ public class RealMachine extends JFrame {
 			}
 		});
 		contentPane.add(btnRunSingleCycle, "cell 1 13");
-		
+
 		initTextFields();
 		initActionListeners();
 	}
-	
-	private void initTextFields(){
-		PTRtextField.setText("00");
-		ICtextField.setText("0000");
-		SPtextField.setText("0000");
-		CDRtextField.setText("0000000000");
-		ARtextField.setText("00000000");
-		MDRtextField.setText("00");
-		TItextField.setText("00");
-		PItextField.setText("00");
-		SItextField.setText("00");
+
+	private void initTextFields() {
+		PTRtextField.setText("|00|");
+		ICtextField.setText("|00|00|");
+		SPtextField.setText("|00|00|");
+		CDRtextField.setText("|00|00|00|00|00|");
+		ARtextField.setText("|00|00|00|00|");
+		MDRtextField.setText("|00|");
+		TItextField.setText("|00|");
+		PItextField.setText("|00|");
+		SItextField.setText("|00|");
 	}
 
 	private void initActionListeners() {
@@ -163,8 +163,8 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.PTR = bytes[0];
 				} else {
 					MissingLink.cpu.PTR = 00;
-					PTRtextField.setText("00");
 				}
+				refreshData();
 			}
 		});
 		ICtextField.addActionListener(new ActionListener() {
@@ -174,8 +174,8 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.IC = bytes;
 				} else {
 					MissingLink.cpu.IC = new Byte[] { 0, 0 };
-					ICtextField.setText("0000");
 				}
+				refreshData();
 			}
 		});
 		SPtextField.addActionListener(new ActionListener() {
@@ -185,8 +185,8 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.SP = bytes;
 				} else {
 					MissingLink.cpu.SP = new Byte[] { 0, 0 };
-					SPtextField.setText("0000");
 				}
+				refreshData();
 			}
 		});
 		CDRtextField.addActionListener(new ActionListener() {
@@ -196,8 +196,8 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.CDR = bytes;
 				} else {
 					MissingLink.cpu.CDR = new Byte[] { 0, 0, 0, 0, 0 };
-					CDRtextField.setText("0000000000");
 				}
+				refreshData();
 			}
 		});
 		ARtextField.addActionListener(new ActionListener() {
@@ -207,8 +207,8 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.CDR = bytes;
 				} else {
 					MissingLink.cpu.CDR = new Byte[] { 0, 0, 0, 0 };
-					ARtextField.setText("00000000");
 				}
+				refreshData();
 			}
 		});
 		MDRtextField.addActionListener(new ActionListener() {
@@ -218,8 +218,8 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.MDR = bytes[0];
 				} else {
 					MissingLink.cpu.MDR = 00;
-					MDRtextField.setText("00");
 				}
+				refreshData();
 			}
 		});
 		TItextField.addActionListener(new ActionListener() {
@@ -229,8 +229,8 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.TI = bytes[0];
 				} else {
 					MissingLink.cpu.TI = 00;
-					TItextField.setText("00");
 				}
+				refreshData();
 			}
 		});
 		PItextField.addActionListener(new ActionListener() {
@@ -240,8 +240,8 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.PI = bytes[0];
 				} else {
 					MissingLink.cpu.PI = 00;
-					PItextField.setText("00");
 				}
+				refreshData();
 			}
 		});
 		SItextField.addActionListener(new ActionListener() {
@@ -251,36 +251,54 @@ public class RealMachine extends JFrame {
 					MissingLink.cpu.SI = bytes[0];
 				} else {
 					MissingLink.cpu.SI = 00;
-					SItextField.setText("0");
 				}
+				refreshData();
 			}
 		});
 	}
 
 	private Byte[] convertToBytes(String s) {
-		String[] s_bytes = s.split("(?<=\\G.{2})");
+		String[] s_bytes;
+		if (s.indexOf('|') != -1) {
+			s_bytes = s.split("\\|");
+			s_bytes = Arrays.copyOfRange(s_bytes, 1, s_bytes.length);
+		} else {
+			s_bytes = s.split("(?<=\\G.{2})");
+		}
 		Byte[] bytes = new Byte[s_bytes.length];
 		try {
 			int i = 0;
 			for (String b : s_bytes)
 				bytes[i++] = (byte) Integer.parseInt(b, 16);
-			//System.out.println(Arrays.toString(bytes));
+			// System.out.println(Arrays.toString(bytes));
 		} catch (Exception e) {
-			bytes = new Byte[]{};
+			bytes = new Byte[] {};
 		}
 		return bytes;
 	}
-	
-	public void refreshData(){
-		PTRtextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.PTR)));
-		ICtextField.setText("0000");
-		SPtextField.setText("0000");
-		CDRtextField.setText("0000000000");
-		ARtextField.setText("00000000");
-		MDRtextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.MDR)));
-		TItextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.TI)));
-		PItextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.PI)));
-		SItextField.setText(Integer.toHexString(Byte.toUnsignedInt(MissingLink.cpu.SI)));
+
+	public void refreshData() {
+		PTRtextField.setText(formStringForByteArr(MissingLink.cpu.PTR));
+		ICtextField.setText(formStringForByteArr(MissingLink.cpu.IC));
+		SPtextField.setText(formStringForByteArr(MissingLink.cpu.SP));
+		CDRtextField.setText(formStringForByteArr(MissingLink.cpu.CDR));
+		ARtextField.setText(formStringForByteArr(MissingLink.cpu.AR));
+		MDRtextField.setText(formStringForByteArr(MissingLink.cpu.MDR));
+		TItextField.setText(formStringForByteArr(MissingLink.cpu.TI));
+		PItextField.setText(formStringForByteArr(MissingLink.cpu.PI));
+		SItextField.setText(formStringForByteArr(MissingLink.cpu.SI));
 		RAMtable.repaint();
+	}
+
+	private String formStringForByteArr(Byte b) {
+		return formStringForByteArr(new Byte[] { b });
+	}
+
+	private String formStringForByteArr(Byte[] bytes) {
+		String a = "|";
+		for (Byte b : bytes) {
+			a += MissingLink.getByteAsHex(b) + "|";
+		}
+		return a;
 	}
 }
