@@ -1,11 +1,27 @@
 package backend;
 
+import java.awt.Component;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+
+import GUI.CustomTableModel;
+import GUI.RowNumberTable;
+
 public class HardwareMethods {
 
 	CPU cpu;
+	MemoryUnit HardDrive;
+	Byte[][] hdd;
+	JFrame frame;
 
 	public HardwareMethods(CPU cpu) {
 		this.cpu = cpu;
+		this.HardDrive = new MemoryUnit();
+		this.hdd = this.HardDrive.memory;
+		this.create_HDD_GUI();
 	}
 
 	public void mainMachineCycle() {
@@ -138,5 +154,33 @@ public class HardwareMethods {
 		Byte[] newReg = { (byte) 00, reg[1] };
 		newReg[0] = (byte) (16 * PTR + Byte.toUnsignedInt(reg[0]));
 		return newReg;
+	}
+	
+	private void create_HDD_GUI(){
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(300+640, 150, 640, 480);
+		frame.setTitle("External Memory (HDD)");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		frame.setContentPane(scrollPane);
+
+		JTable HDDtable = new JTable();
+		HDDtable.setAlignmentY(Component.TOP_ALIGNMENT);
+		HDDtable.setAlignmentX(Component.LEFT_ALIGNMENT);
+		HDDtable.setRowSelectionAllowed(false);
+		HDDtable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(HDDtable);
+
+		JTable rowTable = new RowNumberTable(HDDtable);
+		scrollPane.setRowHeaderView(rowTable);
+		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER, rowTable.getTableHeader());
+		
+		HDDtable.setModel(new CustomTableModel(hdd));
+		
+		MissingLink.resizeColumnWidth(HDDtable);
+		frame.setVisible(true);		
 	}
 }

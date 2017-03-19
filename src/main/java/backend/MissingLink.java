@@ -1,10 +1,10 @@
 package backend;
 
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import GUI.CustomTableModel;
 import GUI.RealMachine;
 
 /**
@@ -32,52 +32,15 @@ public class MissingLink {
 	}
 
 	private void setUpRamTable() {
-		TableModel model = new AbstractTableModel() {
-			private static final long serialVersionUID = 1L;
-			Byte[][] data = ram.memory;
-
-			@Override
-			public Object getValueAt(int rowIndex, int columnIndex) {
-				return getByteAsHex(data[rowIndex][columnIndex]);
-			}
-
-			@Override
-			public int getRowCount() {
-				return 256;
-			}
-
-			@Override
-			public int getColumnCount() {
-				return 256;
-			}
-
-			@Override
-			public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-				try {
-					String d = (String) aValue;
-					data[rowIndex][columnIndex] = (byte) Integer.parseInt(d, 16);
-				} catch (Exception e) {
-				}
-			}
-
-			@Override
-			public String getColumnName(int column) {
-				return getByteAsHex((byte) column);
-			}
-
-			@Override
-			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return true;
-			}
-		};
+		TableModel model = new CustomTableModel(ram.memory);
 
 		frame.RAMtable.setModel(model);
 
-		this.resizeColumnWidth(frame.RAMtable);
+		resizeColumnWidth(frame.RAMtable);
 
 	}
 
-	public void resizeColumnWidth(JTable table) {
+	public static void resizeColumnWidth(JTable table) {
 		final TableColumnModel columnModel = table.getColumnModel();
 		for (int column = 0; column < table.getColumnCount(); column++) {
 			columnModel.getColumn(column).setMinWidth(25);
