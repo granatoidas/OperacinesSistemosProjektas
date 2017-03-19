@@ -144,13 +144,13 @@ public class RealMachine extends JFrame {
 		});
 		contentPane.add(btnRunSingleCycle, "cell 1 13");
 
-		outputPanel = new IOWindow(true);
-		outputPanel.setMinimumSize(new Dimension(136, 120));
-		contentPane.add(outputPanel, "cell 0 15 2 1,grow");
+		inputPanel = new IOWindow(true);
+		inputPanel.setMinimumSize(new Dimension(136, 120));
+		contentPane.add(inputPanel, "cell 0 15 2 1,grow");
 
-		inputPanel = new IOWindow(false);
-		inputPanel.setMinimumSize(new Dimension(144, 120));
-		contentPane.add(inputPanel, "cell 2 15,grow");
+		outputPanel = new IOWindow(false);
+		outputPanel.setMinimumSize(new Dimension(144, 120));
+		contentPane.add(outputPanel, "cell 2 15,grow");
 
 		initTextFields();
 		initActionListeners();

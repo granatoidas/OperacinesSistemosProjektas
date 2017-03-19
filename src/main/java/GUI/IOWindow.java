@@ -6,7 +6,14 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+
+import backend.MissingLink;
+
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
 
 public class IOWindow extends JPanel {
 
@@ -14,22 +21,50 @@ public class IOWindow extends JPanel {
 
 	public IOWindow(boolean isInput) {
 		setLayout(new MigLayout("", "[grow][]", "[][grow]"));
-		
-		JLabel lbl_IO = new JLabel(isInput? "Input screen" : "Output screen");
+
+		JLabel lbl_IO = new JLabel(isInput ? "Input screen" : "Output screen");
 		add(lbl_IO, "cell 0 0");
-		
-		JButton btnNewButton = new JButton("Clear");
-		add(btnNewButton, "cell 1 0");
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scrollPane, "cell 0 1 2 1,grow");
-		
+
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(isInput);
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
 
+		if (isInput) {
+			textArea.addKeyListener(new KeyListener() {
+
+				@Override
+				public void keyPressed(KeyEvent arg0) {
+				}
+
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+				}
+
+				@Override
+				public void keyTyped(KeyEvent arg0) {
+					if (arg0.getKeyChar() == '$') {
+						String[] commands = textArea.getText().split("\\$");
+						MissingLink.hardwareMethods.passInput(commands[commands.length - 1]);
+						arg0.consume();
+						textArea.append("$\n");
+					}
+
+				}
+			});
+		}
+
+		JButton btnNewButton = new JButton("Clear");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textArea.setText("");
+			}
+		});
+		add(btnNewButton, "cell 1 0");
 	}
 
 }

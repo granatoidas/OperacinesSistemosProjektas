@@ -136,6 +136,10 @@ public class HardwareMethods {
 	public void CD() {
 
 	}
+	
+	public void passInput(String s){
+		
+	}
 
 	/**
 	 * Calls pagingMechanism and uses current CPU PTR as second parameter
