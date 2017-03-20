@@ -380,4 +380,22 @@ public class CPU {
 		this.AR[3] = d;
 		this.SP=iterateRegister(this.SP, -4);
 	}
+	public void SET_CDR() {
+		Byte[] SPtmp = iterateAndConvert(SP, -4);
+		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateAndConvert(SP, -3);
+		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateAndConvert(SP, -2);
+		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateAndConvert(SP, -1);
+		byte d = ram[SPtmp[0]][SPtmp[1]];
+		SPtmp = iterateAndConvert(SP, 0);
+		byte e = ram[SPtmp[0]][SPtmp[1]];
+		this.CDR[0] = a;
+		this.CDR[1] = b;
+		this.CDR[2] = c;
+		this.CDR[3] = d;
+		this.CDR[4] = e;
+		this.SP=iterateRegister(this.SP, -5);
+	}
 }
