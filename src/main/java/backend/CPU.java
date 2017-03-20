@@ -233,8 +233,6 @@ public class CPU {
 		}
 		this.IC[0] = a;
 		this.IC[1] = b;
-		this.IC = iterateRegister(this.IC, 3);
-
 	}
 
 	public void JExy() {
@@ -255,8 +253,9 @@ public class CPU {
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
-			this.IC = iterateRegister(this.IC, 3);
+			return;
 		}
+		this.IC = iterateRegister(this.IC, 3);
 	}
 
 	public void JLxy() {
@@ -278,7 +277,9 @@ public class CPU {
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
 			this.IC = iterateRegister(this.IC, 3);
+			return;
 		}
+		this.IC = iterateRegister(this.IC, 3);
 	}
 
 	public void JGxy() {
@@ -300,7 +301,9 @@ public class CPU {
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
 			this.IC = iterateRegister(this.IC, 3);
+			return;
 		}
+		this.IC = iterateRegister(this.IC, 3);
 	}
 
 	public void LDxy() {
@@ -367,6 +370,7 @@ public class CPU {
 		IC[1] = 0;
 		SP[0] = 0;
 		SP[1] = 13;
+		
 	}
 
 	public void CHNG_U() {
@@ -379,6 +383,7 @@ public class CPU {
 		IC[1] = 0;
 		SP[0] = 0;
 		SP[1] = 13;
+		
 	}
 
 	public void SET_TI() {
@@ -459,5 +464,9 @@ public class CPU {
 	public void READ_E() {
 		CHNG_S();
 		PI = 4;
+	}
+	public void STOP() {
+		PI = 5;
+		CHNG_S();
 	}
 }

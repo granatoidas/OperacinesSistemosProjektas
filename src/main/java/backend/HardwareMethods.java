@@ -82,7 +82,7 @@ public class HardwareMethods {
 			cpu.JGxy();
 			break;
 		case 0x0A:
-			//cpu.STOP();
+			cpu.STOP();
 			break;
 		case 0x0B:
 			cpu.LDxy();
@@ -97,19 +97,19 @@ public class HardwareMethods {
 			cpu.PUSx();
 			break;
 		case 0x0F:
-			// cpu.PRINT();
+			cpu.PRINT();
 			break;
 		case 0x10:
-			// cpu.READ();
+			cpu.READ();
 			break;
 		case 0x11:
-			// cpu.PRINT_E();
+			cpu.PRINT_E();
 			break;
 		case 0x12:
-			// cpu.READ_E();
+			cpu.READ_E();
 			break;
 		case 0x13:
-			// cpu.SET_AR();
+			cpu.SET_AR();
 			break;
 		case 0x14:
 			// cpu.GET_AR();
@@ -118,19 +118,19 @@ public class HardwareMethods {
 			cpu.INICD();
 			break;
 		case 0x16:
-			// cpu.CHNG_S();
+			cpu.CHNG_S();
 			break;
 		case 0x17:
 			// cpu.SET_PTR();
 			break;
 		case 0x18:
-			// cpu.SET_TI();
+			cpu.SET_TI();
 			break;
 		case 0x19:
-			// cpu.SET_PI();
+			cpu.SET_PI();
 			break;
 		case 0x1A:
-			// cpu.SET_CDR();
+			cpu.SET_CDR();
 			break;
 		default:
 			cpu.SI = 2;
