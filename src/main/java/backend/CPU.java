@@ -15,7 +15,7 @@ public class CPU {
 	public Byte[] IC = { new Byte((byte) 0), new Byte((byte) 0) };
 	public Byte[] SP = { new Byte((byte) 0), new Byte((byte) 0) };
 
-	public Byte PTR = new Byte((byte) 0);
+	public Byte PTR = new Byte((byte) 1);
 
 	public Byte MDR = new Byte((byte) 0);
 
