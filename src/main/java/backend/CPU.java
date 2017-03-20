@@ -461,4 +461,8 @@ public class CPU {
 		CHNG_S();
 		PI = 4;
 	}
+	public void STOP() {
+		PI = 4;
+		CHNG_S();
+	}
 }
