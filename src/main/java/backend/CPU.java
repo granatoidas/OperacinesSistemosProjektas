@@ -365,12 +365,12 @@ public class CPU {
 		ram[14][4 * PTR - 1] = IC[0];
 		ram[14][4 * PTR] = IC[1];
 		ram[14][4 * PTR - 3] = SP[0];
-		ram[14][4 * PTR - 2] = IC[1];
+		ram[14][4 * PTR - 2] = SP[1];
 		IC[0] = 0;
 		IC[1] = 0;
 		SP[0] = 0;
 		SP[1] = 13;
-		this.IC = iterateRegister(this.IC, 1);
+		
 	}
 
 	public void CHNG_U() {
@@ -383,7 +383,7 @@ public class CPU {
 		IC[1] = 0;
 		SP[0] = 0;
 		SP[1] = 13;
-		this.IC = iterateRegister(this.IC, 1);
+		
 	}
 
 	public void SET_TI() {
