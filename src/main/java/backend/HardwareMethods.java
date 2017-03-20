@@ -114,7 +114,7 @@ public class HardwareMethods {
 			// cpu.GET_AR();
 			break;
 		case 0x15:
-			// cpu.INICD();
+			cpu.INICD();
 			break;
 		case 0x16:
 			// cpu.CHNG_S();
@@ -169,7 +169,14 @@ public class HardwareMethods {
 	private void writeFromInputToRam() {
 		waitingForInput = false;
 		String s = inputQueue.removeFirst();
-		byte[] b = s.getBytes(StandardCharsets.US_ASCII);
+		byte[] bytes = s.getBytes(StandardCharsets.US_ASCII);
+		Byte[] address = {lastCDR[1], lastCDR[2]};
+		for (byte b : bytes){
+			cpu.ram[address[0]][ address[1]] = b;
+			address = cpu.iterateRegister(address, 1, (byte) 1);
+		}
+		cpu.PI = (byte) 6;
+		MissingLink.frame.refreshData();
 	}
 
 	/**
