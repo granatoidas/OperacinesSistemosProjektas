@@ -192,15 +192,15 @@ public class CPU {
 	}
 
 	public void CMP() {
-		Byte[] SP = convertAddress(this.SP);
-		Byte[] SPtmp = iterateRegister(SP, -3);
+		//Byte[] SP = convertAddress(this.SP);
+		Byte[] SPtmp = iterateAndConvert(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -2);
+		SPtmp = iterateAndConvert(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -1);
+		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[0]][SP[1]]; // SP nes imam be
-									// poslinkio
+		SPtmp = convertAddress(this.SP);
+		byte d = ram[hex(SPtmp[0])][hex(SPtmp[1])]; 
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		byte rez;
@@ -211,18 +211,17 @@ public class CPU {
 		} else {
 			rez = 0;
 		}
-
-		SPtmp = iterateRegister(this.SP, 1);
+		SPtmp = iterateAndConvert(this.SP, 1);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = rez;
-		this.SP = SPtmp;
+		this.SP = iterateRegister(this.SP, 1);
 		decrementTimer();
 	}
 
 	public void JPxy() {
-		Byte[] IC = convertAddress(this.IC);
-		Byte[] ICtmp = iterateRegister(IC, 1);
+		//Byte[] IC = convertAddress(this.IC);
+		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
-		ICtmp = iterateRegister(IC, 2);
+		ICtmp = iterateAndConvert(IC, 2);
 		byte b = ram[hex(IC[0])][hex(IC[1])];
 		this.IC[0] = a;
 		this.IC[1] = b;
@@ -230,13 +229,45 @@ public class CPU {
 	}
 
 	public void JExy() {
-		Byte[] IC = convertAddress(this.IC);
+		//Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
 		byte tmp = ram[hex(SP[0])][hex(SP[1])];
 		if (tmp == 1) {
-			Byte[] ICtmp = iterateRegister(IC, 1);
+			Byte[] ICtmp = iterateAndConvert(IC, 1);
 			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
-			ICtmp = iterateRegister(IC, 2);
+			ICtmp = iterateAndConvert(IC, 2);
+			byte b = ram[hex(IC[0])][hex(IC[1])];
+			this.IC[0] = a;
+			this.IC[1] = b;
+			this.SP = iterateRegister(this.SP, -1);
+			decrementTimer();
+		}
+	}
+	
+	public void JLxy() {
+		//Byte[] IC = convertAddress(this.IC);
+		Byte[] SP = convertAddress(this.SP);
+		byte tmp = ram[hex(SP[0])][hex(SP[1])];
+		if (tmp == 0) {
+			Byte[] ICtmp = iterateAndConvert(IC, 1);
+			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+			ICtmp = iterateAndConvert(IC, 2);
+			byte b = ram[hex(IC[0])][hex(IC[1])];
+			this.IC[0] = a;
+			this.IC[1] = b;
+			this.SP = iterateRegister(this.SP, -1);
+			decrementTimer();
+		}
+	}
+	
+	public void JGxy() {
+		//Byte[] IC = convertAddress(this.IC);
+		Byte[] SP = convertAddress(this.SP);
+		byte tmp = ram[hex(SP[0])][hex(SP[1])];
+		if (tmp == 2) {
+			Byte[] ICtmp = iterateAndConvert(IC, 1);
+			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+			ICtmp = iterateAndConvert(IC, 2);
 			byte b = ram[hex(IC[0])][hex(IC[1])];
 			this.IC[0] = a;
 			this.IC[1] = b;
