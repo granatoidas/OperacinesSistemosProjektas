@@ -220,14 +220,17 @@ public class CPU {
 	}
 
 	public void JPxy() {
-		//Byte[] IC = convertAddress(this.IC);
-		if (this.MDR == 0) {
-			
-		}
+		// Byte[] IC = convertAddress(this.IC);
 		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		ICtmp = iterateAndConvert(IC, 2);
 		byte b = ram[hex(IC[0])][hex(IC[1])];
+		if (MDR == 0) {
+			if (a > 0x0F) {
+				SI = 2;
+				return;
+			}
+		}
 		this.IC[0] = a;
 		this.IC[1] = b;
 		this.IC = iterateRegister(this.IC, 3);
@@ -243,6 +246,12 @@ public class CPU {
 			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			ICtmp = iterateAndConvert(IC, 2);
 			byte b = ram[hex(IC[0])][hex(IC[1])];
+			if (MDR == 0) {
+				if (a > 0x0F) {
+					SI = 2;
+					return;
+				}
+			}
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
@@ -259,6 +268,12 @@ public class CPU {
 			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			ICtmp = iterateAndConvert(IC, 2);
 			byte b = ram[hex(IC[0])][hex(IC[1])];
+			if (MDR == 0) {
+				if (a > 0x0F) {
+					SI = 2;
+					return;
+				}
+			}
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
@@ -275,6 +290,12 @@ public class CPU {
 			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			ICtmp = iterateAndConvert(IC, 2);
 			byte b = ram[hex(IC[0])][hex(IC[1])];
+			if (MDR == 0) {
+				if (a > 0x0F) {
+					SI = 2;
+					return;
+				}
+			}
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
