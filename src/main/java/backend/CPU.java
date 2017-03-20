@@ -87,11 +87,6 @@ public class CPU {
 	////////////////////////////////////////////
 
 	public void ADD() {
-		// Byte[] SP = convertAddress(this.SP);
-		// #TODO adresas turi but paiteruojamas originalioje formoje tada
-		// konvertuojamas
-		// Tai svarbu nes pakonvertuoto adreso nera kaip tikrint ar VM ribose
-		// yra
 		Byte[] SPtmp = iterateAndConvert(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, -2);
@@ -192,7 +187,7 @@ public class CPU {
 	}
 
 	public void CMP() {
-		//Byte[] SP = convertAddress(this.SP);
+		// Byte[] SP = convertAddress(this.SP);
 		Byte[] SPtmp = iterateAndConvert(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, -2);
@@ -200,7 +195,7 @@ public class CPU {
 		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = convertAddress(this.SP);
-		byte d = ram[hex(SPtmp[0])][hex(SPtmp[1])]; 
+		byte d = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		byte rez;
@@ -218,7 +213,7 @@ public class CPU {
 	}
 
 	public void JPxy() {
-		//Byte[] IC = convertAddress(this.IC);
+		// Byte[] IC = convertAddress(this.IC);
 		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		ICtmp = iterateAndConvert(IC, 2);
@@ -229,7 +224,7 @@ public class CPU {
 	}
 
 	public void JExy() {
-		//Byte[] IC = convertAddress(this.IC);
+		// Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
 		byte tmp = ram[hex(SP[0])][hex(SP[1])];
 		if (tmp == 1) {
@@ -243,9 +238,9 @@ public class CPU {
 			decrementTimer();
 		}
 	}
-	
+
 	public void JLxy() {
-		//Byte[] IC = convertAddress(this.IC);
+		// Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
 		byte tmp = ram[hex(SP[0])][hex(SP[1])];
 		if (tmp == 0) {
@@ -259,9 +254,9 @@ public class CPU {
 			decrementTimer();
 		}
 	}
-	
+
 	public void JGxy() {
-		//Byte[] IC = convertAddress(this.IC);
+		// Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
 		byte tmp = ram[hex(SP[0])][hex(SP[1])];
 		if (tmp == 2) {
@@ -317,5 +312,42 @@ public class CPU {
 		this.SP = iterateRegister(this.SP, 1);
 		ram[hex(SP[0])][hex(SP[1])] = x;
 		decrementTimer();
+	}
+
+	public void CHNG_S() {
+		MDR = 1;
+		TI = 50;
+		ram[14][4 * PTR - 1] = IC[0];
+		ram[14][4 * PTR] = IC[1];
+		ram[14][4 * PTR - 3] = SP[0];
+		ram[14][4 * PTR - 2] = IC[1];
+		IC[0] = 0;
+		IC[1] = 0;
+		SP[0] = 0;
+		SP[1] = 11;
+	}
+
+	public void CHNG_U() {
+		if (MDR == 0) {
+			SI = 2;
+			return;
+		}
+		MDR = 0;
+		IC[0] = 0;
+		IC[1] = 0;
+		SP[0] = 0;
+		SP[1] = 11;
+	}
+	
+	public void SET_TI(){
+		Byte[] SP = convertAddress(this.SP);
+		TI = ram[hex(SP[0])][hex(SP[1])];
+		this.SP = iterateRegister(this.SP, -1);
+	}
+	
+	public void SET_PI(){
+		Byte[] SP = convertAddress(this.SP);
+		PI = ram[hex(SP[0])][hex(SP[1])];
+		this.SP = iterateRegister(this.SP, -1);
 	}
 }
