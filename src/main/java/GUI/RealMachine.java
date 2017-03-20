@@ -158,7 +158,7 @@ public class RealMachine extends JFrame {
 	}
 
 	private void initTextFields() {
-		PTRtextField.setText("|00|");
+		PTRtextField.setText("|01|");
 		ICtextField.setText("|00|00|");
 		SPtextField.setText("|00|00|");
 		CDRtextField.setText("|00|00|00|00|00|");
@@ -200,7 +200,7 @@ public class RealMachine extends JFrame {
 				if (bytes.length == 1) {
 					MissingLink.cpu.PTR = bytes[0];
 				} else {
-					MissingLink.cpu.PTR = 00;
+					MissingLink.cpu.PTR = 01;
 				}
 				refreshData();
 			}

@@ -154,12 +154,14 @@ public class HardwareMethods {
 			MissingLink.frame.printDataToOutput(output);
 			break;
 		case 3:
-
+			writeToHdd();
 			break;
 		case 4:
-
+			readFromHdd();
 			break;
 		}
+		MissingLink.frame.refreshData();
+		this.frame.repaint();
 	}
 
 	public void passInput(String s) {
@@ -197,6 +199,34 @@ public class HardwareMethods {
 			out += add;
 		}
 		return out;
+	}
+
+	private void writeToHdd() {
+		int i = 0;
+		Byte[] addressRam = { lastCDR[1], lastCDR[2] };
+		Byte[] addressHdd = { lastCDR[3], lastCDR[4] };
+		while (i++ < 100) {
+			byte b = cpu.ram[addressRam[0]][addressRam[1]];
+			if (b == (byte) 0x62)
+				break;
+			hdd[addressHdd[0]][addressHdd[1]] = b;
+			addressRam = cpu.iterateRegister(addressRam, 1, (byte) 1);
+			addressHdd = cpu.iterateRegister(addressHdd, 1, (byte) 1);
+		}
+	}
+
+	private void readFromHdd() {
+		int i = 0;
+		Byte[] addressRam = { lastCDR[1], lastCDR[2] };
+		Byte[] addressHdd = { lastCDR[3], lastCDR[4] };
+		while (i++ < 100) {
+			byte b = hdd[addressHdd[0]][addressHdd[1]];
+			if (b == (byte) 0x62)
+				break;
+			cpu.ram[addressRam[0]][addressRam[1]] = b;
+			addressRam = cpu.iterateRegister(addressRam, 1, (byte) 1);
+			addressHdd = cpu.iterateRegister(addressHdd, 1, (byte) 1);
+		}
 	}
 
 	/**
