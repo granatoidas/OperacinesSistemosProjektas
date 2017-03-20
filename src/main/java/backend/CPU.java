@@ -287,4 +287,27 @@ public class CPU {
 		ram[hex(SP[0])][hex(SP[1])] = x;
 		decrementTimer();
 	}
+	public void PUSx() {
+		Byte[] SP = convertAddress(this.SP);
+		Byte[] ICtmp = iterateAndConvert(IC, 1);
+		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+		this.SP = iterateRegister(this.SP, 1);
+		ram[hex(SP[0])][hex(SP[1])] = x;
+		decrementTimer();
+	}
+	public void SET_AR() {
+		Byte[] SPtmp = iterateAndConvert(SP, -3);
+		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateAndConvert(SP, -2);
+		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateAndConvert(SP, -1);
+		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		SPtmp = iterateAndConvert(SP, 0);
+		byte d = ram[SPtmp[0]][SPtmp[1]];
+		this.AR[0] = a;
+		this.AR[1] = b;
+		this.AR[2] = c;
+		this.AR[3] = d;
+		this.SP=iterateRegister(this.SP, -4);
+	}
 }
