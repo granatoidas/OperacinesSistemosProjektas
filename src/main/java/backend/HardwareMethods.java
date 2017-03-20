@@ -76,13 +76,13 @@ public class HardwareMethods {
 			cpu.JExy();
 			break;
 		case 0x08:
-			// cpu.JLxy();
+			cpu.JLxy();
 			break;
 		case 0x09:
-			// cpu.JGxy();
+			cpu.JGxy();
 			break;
 		case 0x0A:
-			// cpu.STOP();
+			cpu.STOP();
 			break;
 		case 0x0B:
 			cpu.LDxy();
@@ -91,10 +91,10 @@ public class HardwareMethods {
 			cpu.PTxy();
 			break;
 		case 0x0D:
-			// cpu.PUNx();
+			cpu.PUNx();
 			break;
 		case 0x0E:
-			// cpu.PUSx();
+			cpu.PUSx();
 			break;
 		case 0x0F:
 			// cpu.PRINT();
