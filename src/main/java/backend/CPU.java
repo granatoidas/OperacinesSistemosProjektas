@@ -75,8 +75,8 @@ public class CPU {
 			return addr.clone();
 		return MissingLink.hardwareMethods.pagingMechanism(addr);
 	}
-	
-	private Byte[] iterateAndConvert(Byte [] addr, int stepsAmount){
+
+	private Byte[] iterateAndConvert(Byte[] addr, int stepsAmount) {
 		Byte[] newAddress = iterateRegister(addr, stepsAmount);
 		Byte[] conAddress = convertAddress(newAddress);
 		return conAddress;
@@ -87,9 +87,11 @@ public class CPU {
 	////////////////////////////////////////////
 
 	public void ADD() {
-		//Byte[] SP = convertAddress(this.SP);
-		// #TODO adresas turi but paiteruojamas originalioje formoje tada konvertuojamas
-		// Tai svarbu nes pakonvertuoto adreso nera kaip tikrint ar VM ribose yra
+		// Byte[] SP = convertAddress(this.SP);
+		// #TODO adresas turi but paiteruojamas originalioje formoje tada
+		// konvertuojamas
+		// Tai svarbu nes pakonvertuoto adreso nera kaip tikrint ar VM ribose
+		// yra
 		Byte[] SPtmp = iterateAndConvert(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, -2);
@@ -97,7 +99,7 @@ public class CPU {
 		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, 0);
-		byte d = ram[SPtmp[0]][SPtmp[1]]; 
+		byte d = ram[SPtmp[0]][SPtmp[1]];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 + val2);
@@ -106,7 +108,7 @@ public class CPU {
 
 		SPtmp = iterateAndConvert(SP, -2);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a1;
-		SPtmp = iterateAndConvert(SP, -1);
+		SPtmp = iterateAndConvert(SP, -3);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
 		SPtmp = iterateRegister(this.SP, -2);
@@ -115,23 +117,23 @@ public class CPU {
 	}
 
 	public void SUB() {
-		Byte[] SP = convertAddress(this.SP);
-		Byte[] SPtmp = iterateRegister(SP, -3);
+		Byte[] SPtmp = iterateAndConvert(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -2);
+		SPtmp = iterateAndConvert(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -1);
+		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
+		SPtmp = iterateAndConvert(SP, 0);
+		byte d = ram[SPtmp[0]][SPtmp[1]];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 - val2);
 		byte a1 = (byte) sum;
 		byte a2 = (byte) (sum >> 8);
 
-		SPtmp = iterateRegister(SP, -2);
+		SPtmp = iterateAndConvert(SP, -2);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a1;
-		SPtmp = iterateRegister(SP, -1);
+		SPtmp = iterateAndConvert(SP, -3);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
 		SPtmp = iterateRegister(this.SP, -2);
@@ -140,23 +142,23 @@ public class CPU {
 	}
 
 	public void MUL() {
-		Byte[] SP = convertAddress(this.SP);
-		Byte[] SPtmp = iterateRegister(SP, -3);
+		Byte[] SPtmp = iterateAndConvert(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -2);
+		SPtmp = iterateAndConvert(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -1);
+		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
+		SPtmp = iterateAndConvert(SP, 0);
+		byte d = ram[SPtmp[0]][SPtmp[1]];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 * val2);
 		byte a1 = (byte) sum;
 		byte a2 = (byte) (sum >> 8);
 
-		SPtmp = iterateRegister(SP, -2);
+		SPtmp = iterateAndConvert(SP, -2);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a1;
-		SPtmp = iterateRegister(SP, -1);
+		SPtmp = iterateAndConvert(SP, -3);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
 		SPtmp = iterateRegister(this.SP, -2);
@@ -165,23 +167,23 @@ public class CPU {
 	}
 
 	public void DIV() {
-		Byte[] SP = convertAddress(this.SP);
-		Byte[] SPtmp = iterateRegister(SP, -3);
+		Byte[] SPtmp = iterateAndConvert(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -2);
+		SPtmp = iterateAndConvert(SP, -2);
 		byte b = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		SPtmp = iterateRegister(SP, -1);
+		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
-		byte d = ram[SP[0]][SP[1]]; // SP nes imam be poslinkio
+		SPtmp = iterateAndConvert(SP, 0);
+		byte d = ram[SPtmp[0]][SPtmp[1]];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 / val2);
 		byte a1 = (byte) sum;
 		byte a2 = (byte) (sum >> 8);
 
-		SPtmp = iterateRegister(SP, -2);
+		SPtmp = iterateAndConvert(SP, -2);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a1;
-		SPtmp = iterateRegister(SP, -1);
+		SPtmp = iterateAndConvert(SP, -3);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a2;
 
 		SPtmp = iterateRegister(this.SP, -2);
@@ -244,7 +246,7 @@ public class CPU {
 	}
 
 	public void LDxy() {
-		//Byte[] IC = convertAddress(this.IC);
+		// Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
 		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
@@ -261,7 +263,7 @@ public class CPU {
 	}
 
 	public void PTxy() {
-		//Byte[] IC = convertAddress(this.IC);
+		// Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
 		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
@@ -273,6 +275,16 @@ public class CPU {
 		Byte[] xyPTR = convertAddress(xy);
 		ram[hex(xyPTR[0])][hex(xyPTR[1])] = ram[hex(SP[0])][hex(SP[1])];
 		this.SP = iterateRegister(this.SP, -1);
+		decrementTimer();
+	}
+
+	public void PUNx() {
+		// Byte[] IC = convertAddress(this.IC);
+		Byte[] SP = convertAddress(this.SP);
+		Byte[] ICtmp = iterateAndConvert(IC, 1);
+		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+		this.SP = iterateRegister(this.SP, 1);
+		ram[hex(SP[0])][hex(SP[1])] = x;
 		decrementTimer();
 	}
 }
