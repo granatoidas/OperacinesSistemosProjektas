@@ -329,6 +329,10 @@ public class RealMachine extends JFrame {
 
 		RAMtable.repaint();
 	}
+	
+	public void printData(String s){
+		
+	}
 
 	private String formStringForByteArr(Byte b) {
 		return formStringForByteArr(new Byte[] { b });

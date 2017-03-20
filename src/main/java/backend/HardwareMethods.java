@@ -37,6 +37,7 @@ public class HardwareMethods {
 		// instruction Location
 		Byte[] iL = pagingMechanism(cpu.IC);
 		Byte instruction = cpu.ram[cpu.hex(iL[0])][cpu.hex(iL[1])];
+		cpu.decrementTimer();
 		executeInstruction(instruction);
 
 		MissingLink.frame.refreshData();
@@ -149,7 +150,7 @@ public class HardwareMethods {
 				waitingForInput = true;
 			break;
 		case 2:
-
+			String output = generateOutputString();
 			break;
 		case 3:
 
@@ -171,12 +172,19 @@ public class HardwareMethods {
 		String s = inputQueue.removeFirst();
 		byte[] bytes = s.getBytes(StandardCharsets.US_ASCII);
 		Byte[] address = {lastCDR[1], lastCDR[2]};
+		int i = 0;
 		for (byte b : bytes){
 			cpu.ram[address[0]][ address[1]] = b;
 			address = cpu.iterateRegister(address, 1, (byte) 1);
+			if (++i == 100)
+				break;
 		}
 		cpu.PI = (byte) 6;
 		MissingLink.frame.refreshData();
+	}
+	
+	private String generateOutputString(){
+		return "";
 	}
 
 	/**

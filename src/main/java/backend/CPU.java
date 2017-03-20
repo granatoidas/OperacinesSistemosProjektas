@@ -42,7 +42,7 @@ public class CPU {
 		for (int i = 0; i < stpAm; i++) {
 			if (stepsAmount > 0) {
 				if (++naujas[1] == 0x00) {
-					if (++naujas[0] == 16 && mode == 0) {
+					if (++naujas[0] == 0x10 /*16-ta eilute*/ && mode == 0) {
 						naujas[0] = 0;
 					}
 				}
@@ -57,7 +57,7 @@ public class CPU {
 		return naujas;
 	}
 
-	private void decrementTimer() {
+	public void decrementTimer() {
 		if (TI > 0) {
 			TI--;
 		}
