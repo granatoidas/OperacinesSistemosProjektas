@@ -32,19 +32,23 @@ public class CPU {
 		this.ram = ram.memory;
 	}
 
-	private Byte[] iterateRegister(Byte[] reg, int stepsAmount) {
+	public Byte[] iterateRegister(Byte[] reg, int stepsAmount){
+		return iterateRegister(reg, stepsAmount, this.MDR);
+	}
+	
+	public Byte[] iterateRegister(Byte[] reg, int stepsAmount, Byte mode) {
 		Byte[] naujas = { reg[0], reg[1] };
 		int stpAm = Math.abs(stepsAmount);
 		for (int i = 0; i < stpAm; i++) {
 			if (stepsAmount > 0) {
 				if (++naujas[1] == 0x00) {
-					if (++naujas[0] == 16 && MDR == 0) {
+					if (++naujas[0] == 16 && mode == 0) {
 						naujas[0] = 0;
 					}
 				}
 			} else {
 				if (--naujas[1] == 0xFF) {
-					if (--naujas[0] == 0xFF && MDR == 0) {
+					if (--naujas[0] == 0xFF && mode == 0) {
 						naujas[0] = 15;
 					}
 				}
@@ -340,5 +344,12 @@ public class CPU {
 		this.AR[2] = c;
 		this.AR[3] = d;
 		this.SP=iterateRegister(this.SP, -4);
+	}
+	public void INICD() {
+		if (MDR == 0){
+			SI = (byte) 2;
+			return;
+		}
+		MissingLink.hardwareMethods.CD();
 	}
 }
