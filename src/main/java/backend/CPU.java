@@ -444,6 +444,7 @@ public class CPU {
 		this.CDR[3] = d;
 		this.CDR[4] = e;
 		this.SP = iterateRegister(this.SP, -5);
+		this.IC = iterateRegister(this.IC, 1);
 	}
 
 	public void PRINT() {
