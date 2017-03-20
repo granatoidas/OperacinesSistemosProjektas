@@ -1,6 +1,8 @@
 package backend;
 
 import java.awt.Component;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -16,6 +18,10 @@ public class HardwareMethods {
 	MemoryUnit HardDrive;
 	Byte[][] hdd;
 	JFrame frame;
+
+	private boolean waitingForInput = false;
+	private Byte[] lastCDR;
+	private LinkedList<String> inputQueue = new LinkedList<String>();
 
 	public HardwareMethods(CPU cpu) {
 		this.cpu = cpu;
@@ -134,11 +140,36 @@ public class HardwareMethods {
 	 * This is the code of channel device
 	 */
 	public void CD() {
+		lastCDR = cpu.CDR;
+		switch (lastCDR[0]) {
+		case 1:
+			if (!inputQueue.isEmpty())
+				writeFromInputToRam();
+			else
+				waitingForInput = true;
+			break;
+		case 2:
 
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		}
 	}
-	
-	public void passInput(String s){
-		
+
+	public void passInput(String s) {
+		inputQueue.add(s);
+		if (waitingForInput)
+			writeFromInputToRam();
+	}
+
+	private void writeFromInputToRam() {
+		waitingForInput = false;
+		String s = inputQueue.removeFirst();
+		byte[] b = s.getBytes(StandardCharsets.US_ASCII);
 	}
 
 	/**
