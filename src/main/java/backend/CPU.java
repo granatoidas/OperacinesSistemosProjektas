@@ -243,6 +243,38 @@ public class CPU {
 			decrementTimer();
 		}
 	}
+	
+	public void JLxy() {
+		//Byte[] IC = convertAddress(this.IC);
+		Byte[] SP = convertAddress(this.SP);
+		byte tmp = ram[hex(SP[0])][hex(SP[1])];
+		if (tmp == 0) {
+			Byte[] ICtmp = iterateAndConvert(IC, 1);
+			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+			ICtmp = iterateAndConvert(IC, 2);
+			byte b = ram[hex(IC[0])][hex(IC[1])];
+			this.IC[0] = a;
+			this.IC[1] = b;
+			this.SP = iterateRegister(this.SP, -1);
+			decrementTimer();
+		}
+	}
+	
+	public void JGxy() {
+		//Byte[] IC = convertAddress(this.IC);
+		Byte[] SP = convertAddress(this.SP);
+		byte tmp = ram[hex(SP[0])][hex(SP[1])];
+		if (tmp == 2) {
+			Byte[] ICtmp = iterateAndConvert(IC, 1);
+			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
+			ICtmp = iterateAndConvert(IC, 2);
+			byte b = ram[hex(IC[0])][hex(IC[1])];
+			this.IC[0] = a;
+			this.IC[1] = b;
+			this.SP = iterateRegister(this.SP, -1);
+			decrementTimer();
+		}
+	}
 
 	public void LDxy() {
 		// Byte[] IC = convertAddress(this.IC);
