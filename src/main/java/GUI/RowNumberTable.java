@@ -13,26 +13,22 @@ import backend.Utilities;
  *  This table must be added to the row header of the scrollpane that
  *  contains the main table.
  */
-public class RowNumberTable extends JTable
-	implements ChangeListener, PropertyChangeListener, TableModelListener
-{
+public class RowNumberTable extends JTable implements ChangeListener, PropertyChangeListener, TableModelListener {
 	private static final long serialVersionUID = 1L;
 	private JTable main;
 
-	public RowNumberTable(JTable table)
-	{
+	public RowNumberTable(JTable table) {
 		main = table;
-		main.addPropertyChangeListener( this );
-		main.getModel().addTableModelListener( this );
+		main.addPropertyChangeListener(this);
+		main.getModel().addTableModelListener(this);
 
-		setFocusable( false );
-		setAutoCreateColumnsFromModel( false );
-		setSelectionModel( main.getSelectionModel() );
-
+		setFocusable(false);
+		setAutoCreateColumnsFromModel(false);
+		setSelectionModel(main.getSelectionModel());
 
 		TableColumn column = new TableColumn();
 		column.setHeaderValue(" ");
-		addColumn( column );
+		addColumn(column);
 		column.setCellRenderer(new RowNumberRenderer());
 
 		getColumnModel().getColumn(0).setPreferredWidth(25);
@@ -40,37 +36,32 @@ public class RowNumberTable extends JTable
 	}
 
 	@Override
-	public void addNotify()
-	{
+	public void addNotify() {
 		super.addNotify();
 
 		Component c = getParent();
 
-		//  Keep scrolling of the row table in sync with the main table.
+		// Keep scrolling of the row table in sync with the main table.
 
-		if (c instanceof JViewport)
-		{
-			JViewport viewport = (JViewport)c;
-			viewport.addChangeListener( this );
+		if (c instanceof JViewport) {
+			JViewport viewport = (JViewport) c;
+			viewport.addChangeListener(this);
 		}
 	}
 
 	/*
-	 *  Delegate method to main table
+	 * Delegate method to main table
 	 */
 	@Override
-	public int getRowCount()
-	{
+	public int getRowCount() {
 		return main.getRowCount();
 	}
 
 	@Override
-	public int getRowHeight(int row)
-	{
+	public int getRowHeight(int row) {
 		int rowHeight = main.getRowHeight(row);
 
-		if (rowHeight != super.getRowHeight(row))
-		{
+		if (rowHeight != super.getRowHeight(row)) {
 			super.setRowHeight(row, rowHeight);
 		}
 
@@ -78,103 +69,92 @@ public class RowNumberTable extends JTable
 	}
 
 	/*
-	 *  No model is being used for this table so just use the row number
-	 *  as the value of the cell.
+	 * No model is being used for this table so just use the row number as the
+	 * value of the cell.
 	 */
 	@Override
-	public Object getValueAt(int row, int column)
-	{
+	public Object getValueAt(int row, int column) {
 		return Utilities.getByteAsHex((byte) row);
 	}
 
 	/*
-	 *  Don't edit data in the main TableModel by mistake
+	 * Don't edit data in the main TableModel by mistake
 	 */
 	@Override
-	public boolean isCellEditable(int row, int column)
-	{
+	public boolean isCellEditable(int row, int column) {
 		return false;
 	}
 
 	/*
-	 *  Do nothing since the table ignores the model
+	 * Do nothing since the table ignores the model
 	 */
 	@Override
-	public void setValueAt(Object value, int row, int column) {}
-//
-//  Implement the ChangeListener
-//
-	public void stateChanged(ChangeEvent e)
-	{
-		//  Keep the scrolling of the row table in sync with main table
+	public void setValueAt(Object value, int row, int column) {
+	}
+
+	//
+	// Implement the ChangeListener
+	//
+	public void stateChanged(ChangeEvent e) {
+		// Keep the scrolling of the row table in sync with main table
 
 		JViewport viewport = (JViewport) e.getSource();
-		JScrollPane scrollPane = (JScrollPane)viewport.getParent();
+		JScrollPane scrollPane = (JScrollPane) viewport.getParent();
 		scrollPane.getVerticalScrollBar().setValue(viewport.getViewPosition().y);
 	}
-//
-//  Implement the PropertyChangeListener
-//
-	public void propertyChange(PropertyChangeEvent e)
-	{
-		//  Keep the row table in sync with the main table
 
-		if ("selectionModel".equals(e.getPropertyName()))
-		{
-			setSelectionModel( main.getSelectionModel() );
+	//
+	// Implement the PropertyChangeListener
+	//
+	public void propertyChange(PropertyChangeEvent e) {
+		// Keep the row table in sync with the main table
+
+		if ("selectionModel".equals(e.getPropertyName())) {
+			setSelectionModel(main.getSelectionModel());
 		}
 
-		if ("rowHeight".equals(e.getPropertyName()))
-		{
+		if ("rowHeight".equals(e.getPropertyName())) {
 			repaint();
 		}
 
-		if ("model".equals(e.getPropertyName()))
-		{
-			main.getModel().addTableModelListener( this );
+		if ("model".equals(e.getPropertyName())) {
+			main.getModel().addTableModelListener(this);
 			revalidate();
 		}
 	}
 
-//
-//  Implement the TableModelListener
-//
+	//
+	// Implement the TableModelListener
+	//
 	@Override
-	public void tableChanged(TableModelEvent e)
-	{
+	public void tableChanged(TableModelEvent e) {
 		revalidate();
 	}
 
 	/*
-	 *  Attempt to mimic the table header renderer
+	 * Attempt to mimic the table header renderer
 	 */
-	private static class RowNumberRenderer extends DefaultTableCellRenderer
-	{
+	private static class RowNumberRenderer extends DefaultTableCellRenderer {
 		private static final long serialVersionUID = 1L;
 
-		public RowNumberRenderer()
-		{
+		public RowNumberRenderer() {
 			setHorizontalAlignment(JLabel.CENTER);
 		}
 
-		public Component getTableCellRendererComponent(
-			JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
-		{
-			if (table != null)
-			{
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			if (table != null) {
 				JTableHeader header = table.getTableHeader();
 
-				if (header != null)
-				{
+				if (header != null) {
 					setForeground(header.getForeground());
 					setBackground(header.getBackground());
 					setFont(header.getFont());
 				}
 			}
 
-			if (isSelected)
-			{
-				setFont( getFont().deriveFont(Font.BOLD) );
+			if (isSelected) {
+				setFont(getFont().deriveFont(Font.BOLD));
 			}
 
 			setText((value == null) ? "" : value.toString());

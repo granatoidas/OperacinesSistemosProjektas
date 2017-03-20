@@ -358,19 +358,18 @@ public class CPU {
 		this.IC = iterateRegister(this.IC, 2);
 	}
 
-
 	public void CHNG_S() {
 		MDR = 1;
 		TI = 50;
-		ram[14][4 * (PTR-1) + 0] = IC[0];
-		ram[14][4 * (PTR-1) + 1] = IC[1];
-		ram[14][4 * (PTR-1) + 2] = SP[0];
-		ram[14][4 * (PTR-1) + 3] = SP[1];
+		ram[14][4 * (PTR - 1) + 0] = IC[0];
+		ram[14][4 * (PTR - 1) + 1] = IC[1];
+		ram[14][4 * (PTR - 1) + 2] = SP[0];
+		ram[14][4 * (PTR - 1) + 3] = SP[1];
 		IC[0] = 0;
 		IC[1] = 0;
 		SP[0] = 0;
 		SP[1] = 13;
-		
+
 	}
 
 	public void CHNG_U() {
@@ -383,7 +382,7 @@ public class CPU {
 		IC[1] = 0;
 		SP[0] = 0;
 		SP[1] = 13;
-		
+
 	}
 
 	public void SET_TI() {
@@ -466,6 +465,7 @@ public class CPU {
 		CHNG_S();
 		PI = 4;
 	}
+
 	public void STOP() {
 		PI = 5;
 		CHNG_S();
