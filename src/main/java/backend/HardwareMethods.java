@@ -82,7 +82,7 @@ public class HardwareMethods {
 			cpu.JGxy();
 			break;
 		case 0x0A:
-			cpu.STOP();
+			//cpu.STOP();
 			break;
 		case 0x0B:
 			cpu.LDxy();
