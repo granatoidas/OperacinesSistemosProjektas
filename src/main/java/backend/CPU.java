@@ -233,8 +233,6 @@ public class CPU {
 		}
 		this.IC[0] = a;
 		this.IC[1] = b;
-		this.IC = iterateRegister(this.IC, 3);
-
 	}
 
 	public void JExy() {
@@ -255,8 +253,9 @@ public class CPU {
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
-			this.IC = iterateRegister(this.IC, 3);
+			return;
 		}
+		this.IC = iterateRegister(this.IC, 3);
 	}
 
 	public void JLxy() {
@@ -278,7 +277,9 @@ public class CPU {
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
 			this.IC = iterateRegister(this.IC, 3);
+			return;
 		}
+		this.IC = iterateRegister(this.IC, 3);
 	}
 
 	public void JGxy() {
@@ -300,7 +301,9 @@ public class CPU {
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
 			this.IC = iterateRegister(this.IC, 3);
+			return;
 		}
+		this.IC = iterateRegister(this.IC, 3);
 	}
 
 	public void LDxy() {
