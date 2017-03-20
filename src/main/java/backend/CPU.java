@@ -244,12 +244,12 @@ public class CPU {
 	}
 
 	public void LDxy() {
-		Byte[] IC = convertAddress(this.IC);
+		//Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
-		Byte[] ICtmp = iterateRegister(IC, 1);
+		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
-		ICtmp = iterateRegister(IC, 2);
-		byte y = ram[hex(IC[0])][hex(IC[1])];
+		ICtmp = iterateAndConvert(IC, 2);
+		byte y = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		Byte[] xy = new Byte[2];
 		xy[0] = x;
 		xy[1] = y;
@@ -261,12 +261,12 @@ public class CPU {
 	}
 
 	public void PTxy() {
-		Byte[] IC = convertAddress(this.IC);
+		//Byte[] IC = convertAddress(this.IC);
 		Byte[] SP = convertAddress(this.SP);
-		Byte[] ICtmp = iterateRegister(IC, 1);
+		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte x = ram[hex(ICtmp[0])][hex(ICtmp[1])];
-		ICtmp = iterateRegister(IC, 2);
-		byte y = ram[hex(IC[0])][hex(IC[1])];
+		ICtmp = iterateAndConvert(IC, 2);
+		byte y = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		Byte[] xy = new Byte[2];
 		xy[0] = x;
 		xy[1] = y;
