@@ -330,6 +330,45 @@ public class CPU {
 		ram[hex(SP[0])][hex(SP[1])] = x;
 		decrementTimer();
 	}
+
+
+	public void CHNG_S() {
+		MDR = 1;
+		TI = 50;
+		ram[14][4 * PTR - 1] = IC[0];
+		ram[14][4 * PTR] = IC[1];
+		ram[14][4 * PTR - 3] = SP[0];
+		ram[14][4 * PTR - 2] = IC[1];
+		IC[0] = 0;
+		IC[1] = 0;
+		SP[0] = 0;
+		SP[1] = 11;
+	}
+
+	public void CHNG_U() {
+		if (MDR == 0) {
+			SI = 2;
+			return;
+		}
+		MDR = 0;
+		IC[0] = 0;
+		IC[1] = 0;
+		SP[0] = 0;
+		SP[1] = 11;
+	}
+	
+	public void SET_TI(){
+		Byte[] SP = convertAddress(this.SP);
+		TI = ram[hex(SP[0])][hex(SP[1])];
+		this.SP = iterateRegister(this.SP, -1);
+	}
+	
+	public void SET_PI(){
+		Byte[] SP = convertAddress(this.SP);
+		PI = ram[hex(SP[0])][hex(SP[1])];
+		this.SP = iterateRegister(this.SP, -1);
+	}
+
 	public void SET_AR() {
 		Byte[] SPtmp = iterateAndConvert(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
