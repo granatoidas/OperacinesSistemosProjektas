@@ -82,6 +82,8 @@ public class CPU {
 
 	public void ADD() {
 		Byte[] SP = convertAddress(this.SP);
+		// #TODO adresas turi but paiteruojamas originalioje formoje tada konvertuojamas
+		// Tai svarbu nes pakonvertuoto adreso nera kaip tikrint ar VM ribose yra
 		Byte[] SPtmp = iterateRegister(SP, -3);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateRegister(SP, -2);
