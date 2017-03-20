@@ -344,7 +344,7 @@ public class CPU {
 		IC[0] = 0;
 		IC[1] = 0;
 		SP[0] = 0;
-		SP[1] = 11;
+		SP[1] = 13;
 		this.IC = iterateRegister(this.IC, 1);
 	}
 
@@ -357,7 +357,7 @@ public class CPU {
 		IC[0] = 0;
 		IC[1] = 0;
 		SP[0] = 0;
-		SP[1] = 11;
+		SP[1] = 13;
 		this.IC = iterateRegister(this.IC, 1);
 	}
 
