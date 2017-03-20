@@ -98,7 +98,7 @@ public class CPU {
 		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, 0);
-		byte d = ram[SPtmp[0]][SPtmp[1]];
+		byte d = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 + val2);
@@ -123,7 +123,7 @@ public class CPU {
 		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, 0);
-		byte d = ram[SPtmp[0]][SPtmp[1]];
+		byte d = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 - val2);
@@ -149,7 +149,7 @@ public class CPU {
 		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, 0);
-		byte d = ram[SPtmp[0]][SPtmp[1]];
+		byte d = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 * val2);
@@ -175,7 +175,7 @@ public class CPU {
 		SPtmp = iterateAndConvert(SP, -1);
 		byte c = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, 0);
-		byte d = ram[SPtmp[0]][SPtmp[1]];
+		byte d = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		short val1 = (short) (((a) << 8) | (b));
 		short val2 = (short) (((c) << 8) | (d));
 		short sum = (short) (val1 / val2);
