@@ -440,4 +440,24 @@ public class CPU {
 		this.CDR[4] = e;
 		this.SP = iterateRegister(this.SP, -5);
 	}
+
+	public void PRINT() {
+		CHNG_S();
+		PI = 1;
+	}
+
+	public void READ() {
+		CHNG_S();
+		PI = 2;
+	}
+
+	public void PRINT_E() {
+		CHNG_S();
+		PI = 3;
+	}
+
+	public void READ_E() {
+		CHNG_S();
+		PI = 4;
+	}
 }
