@@ -19,6 +19,7 @@ public class IOWindow extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	JTextArea textArea;
 	public IOWindow(boolean isInput) {
 		setLayout(new MigLayout("", "[grow][]", "[][grow]"));
 
@@ -29,7 +30,7 @@ public class IOWindow extends JPanel {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scrollPane, "cell 0 1 2 1,grow");
 
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setEditable(isInput);
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
@@ -65,6 +66,10 @@ public class IOWindow extends JPanel {
 			}
 		});
 		add(btnNewButton, "cell 1 0");
+	}
+	
+	public void appendOutput(String s){
+		textArea.append(">"+s+"\n");
 	}
 
 }

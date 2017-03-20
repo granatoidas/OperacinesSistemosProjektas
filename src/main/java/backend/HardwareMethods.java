@@ -151,6 +151,7 @@ public class HardwareMethods {
 			break;
 		case 2:
 			String output = generateOutputString();
+			MissingLink.frame.printDataToOutput(output);
 			break;
 		case 3:
 
@@ -171,10 +172,10 @@ public class HardwareMethods {
 		waitingForInput = false;
 		String s = inputQueue.removeFirst();
 		byte[] bytes = s.getBytes(StandardCharsets.US_ASCII);
-		Byte[] address = {lastCDR[1], lastCDR[2]};
+		Byte[] address = { lastCDR[1], lastCDR[2] };
 		int i = 0;
-		for (byte b : bytes){
-			cpu.ram[address[0]][ address[1]] = b;
+		for (byte b : bytes) {
+			cpu.ram[address[0]][address[1]] = b;
 			address = cpu.iterateRegister(address, 1, (byte) 1);
 			if (++i == 100)
 				break;
@@ -182,9 +183,20 @@ public class HardwareMethods {
 		cpu.PI = (byte) 6;
 		MissingLink.frame.refreshData();
 	}
-	
-	private String generateOutputString(){
-		return "";
+
+	private String generateOutputString() {
+		int i = 0;
+		String out = "";
+		Byte[] address = { lastCDR[1], lastCDR[2] };
+		while (i++ < 100) {
+			byte b = cpu.ram[address[0]][address[1]];
+			address = cpu.iterateRegister(address, 1, (byte) 1);
+			String add = new String(new byte[] { b }, StandardCharsets.US_ASCII);
+			if (add.equals("$"))
+				break;
+			out += add;
+		}
+		return out;
 	}
 
 	/**
