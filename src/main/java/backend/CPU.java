@@ -221,6 +221,9 @@ public class CPU {
 
 	public void JPxy() {
 		//Byte[] IC = convertAddress(this.IC);
+		if (this.MDR == 0) {
+			
+		}
 		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		ICtmp = iterateAndConvert(IC, 2);
