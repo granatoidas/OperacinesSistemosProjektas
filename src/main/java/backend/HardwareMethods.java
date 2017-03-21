@@ -112,7 +112,7 @@ public class HardwareMethods {
 			cpu.SET_AR();
 			break;
 		case 0x14:
-			// cpu.GET_AR();
+			cpu.GET_AR();
 			break;
 		case 0x15:
 			cpu.INICD();
