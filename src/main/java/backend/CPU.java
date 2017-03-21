@@ -359,6 +359,7 @@ public class CPU {
 	public void CHNG_S() {
 		MDR = 1;
 		TI = 50;
+		this.IC = iterateRegister(this.IC, 1);
 		ram[12][4 * (PTR - 1) + 0] = IC[0];
 		ram[12][4 * (PTR - 1) + 1] = IC[1];
 		ram[12][4 * (PTR - 1) + 2] = SP[0];
