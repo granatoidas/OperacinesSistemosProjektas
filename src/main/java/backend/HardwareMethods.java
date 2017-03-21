@@ -52,7 +52,7 @@ public class HardwareMethods {
 	private void executeInstruction(Byte instruction) {
 		switch (instruction) {
 		case 0x00:
-			// cpu.CHNG_S();
+			cpu.CHNG_S();
 			break;
 		case 0x01:
 			cpu.ADD();
@@ -112,7 +112,7 @@ public class HardwareMethods {
 			cpu.SET_AR();
 			break;
 		case 0x14:
-			// cpu.GET_AR();
+			cpu.GET_AR();
 			break;
 		case 0x15:
 			cpu.INICD();

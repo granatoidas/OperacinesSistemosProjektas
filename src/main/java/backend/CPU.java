@@ -276,7 +276,6 @@ public class CPU {
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
-			this.IC = iterateRegister(this.IC, 3);
 			return;
 		}
 		this.IC = iterateRegister(this.IC, 3);
@@ -300,7 +299,6 @@ public class CPU {
 			this.IC[0] = a;
 			this.IC[1] = b;
 			this.SP = iterateRegister(this.SP, -1);
-			this.IC = iterateRegister(this.IC, 3);
 			return;
 		}
 		this.IC = iterateRegister(this.IC, 3);
@@ -386,10 +384,15 @@ public class CPU {
 	}
 
 	public void SET_TI() {
+		if (MDR == 0) {
+			SI = (byte) 2;
+			return;
+		}
 		Byte[] SP = convertAddress(this.SP);
 		TI = ram[hex(SP[0])][hex(SP[1])];
 		this.SP = iterateRegister(this.SP, -1);
 		this.IC = iterateRegister(this.IC, 1);
+
 	}
 
 	public void SET_PI() {
@@ -427,6 +430,10 @@ public class CPU {
 	}
 
 	public void SET_CDR() {
+		if (MDR == 0) {
+			SI = (byte) 2;
+			return;
+		}
 		Byte[] SPtmp = iterateAndConvert(SP, -4);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, -3);
@@ -469,5 +476,22 @@ public class CPU {
 	public void STOP() {
 		PI = 5;
 		CHNG_S();
+	}
+
+	public void GET_AR() {
+		byte a = this.AR[0];
+		byte b = this.AR[1];
+		byte c = this.AR[2];
+		byte d = this.AR[3];
+		Byte[] SPtmp = iterateAndConvert(SP, 1);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = a;
+		SPtmp = iterateAndConvert(SP, 2);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = b;
+		SPtmp = iterateAndConvert(SP, 3);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = c;
+		SPtmp = iterateAndConvert(SP, 4);
+		ram[hex(SPtmp[0])][hex(SPtmp[1])] = d;
+		this.SP = iterateRegister(this.SP, 4);
+		this.IC = iterateRegister(this.IC, 1);
 	}
 }
