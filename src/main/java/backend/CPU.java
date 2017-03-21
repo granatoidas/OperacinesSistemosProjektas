@@ -427,6 +427,10 @@ public class CPU {
 	}
 
 	public void SET_CDR() {
+		if (MDR == 0) {
+			SI = (byte) 2;
+			return;
+		}
 		Byte[] SPtmp = iterateAndConvert(SP, -4);
 		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
 		SPtmp = iterateAndConvert(SP, -3);
