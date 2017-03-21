@@ -243,7 +243,7 @@ public class CPU {
 			Byte[] ICtmp = iterateAndConvert(IC, 1);
 			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			ICtmp = iterateAndConvert(IC, 2);
-			byte b = ram[hex(IC[0])][hex(IC[1])];
+			byte b = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			if (MDR == 0) {
 				if (hex(a) > 0x0F) {
 					SI = 2;
@@ -266,7 +266,7 @@ public class CPU {
 			Byte[] ICtmp = iterateAndConvert(IC, 1);
 			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			ICtmp = iterateAndConvert(IC, 2);
-			byte b = ram[hex(IC[0])][hex(IC[1])];
+			byte b = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			if (MDR == 0) {
 				if (hex(a) > 0x0F) {
 					SI = 2;
@@ -290,7 +290,7 @@ public class CPU {
 			Byte[] ICtmp = iterateAndConvert(IC, 1);
 			byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			ICtmp = iterateAndConvert(IC, 2);
-			byte b = ram[hex(IC[0])][hex(IC[1])];
+			byte b = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 			if (MDR == 0) {
 				if (hex(a) > 0x0F) {
 					SI = 2;
