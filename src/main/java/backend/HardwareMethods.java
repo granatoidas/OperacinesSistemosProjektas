@@ -35,7 +35,7 @@ public class HardwareMethods {
 
 		}
 		// instruction Location
-		Byte[] iL = pagingMechanism(cpu.IC);
+		Byte[] iL = (cpu.MDR == 1)? cpu.IC : pagingMechanism(cpu.IC);
 		Byte instruction = cpu.ram[cpu.hex(iL[0])][cpu.hex(iL[1])];
 		cpu.decrementTimer();
 		executeInstruction(instruction);

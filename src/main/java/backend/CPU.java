@@ -47,8 +47,8 @@ public class CPU {
 					}
 				}
 			} else {
-				if (--naujas[1] == 0xFF) {
-					if (--naujas[0] == 0xFF && mode == 0) {
+				if (--naujas[1] == (byte) 0xFF) {
+					if (--naujas[0] == (byte) 0xFF && mode == 0) {
 						naujas[0] = 15;
 					}
 				}
@@ -224,9 +224,9 @@ public class CPU {
 		Byte[] ICtmp = iterateAndConvert(IC, 1);
 		byte a = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		ICtmp = iterateAndConvert(IC, 2);
-		byte b = ram[hex(IC[0])][hex(IC[1])];
+		byte b = ram[hex(ICtmp[0])][hex(ICtmp[1])];
 		if (MDR == 0) {
-			if (a > 0x0F) {
+			if (hex(a) > 0x0F) {
 				SI = 2;
 				return;
 			}
@@ -245,7 +245,7 @@ public class CPU {
 			ICtmp = iterateAndConvert(IC, 2);
 			byte b = ram[hex(IC[0])][hex(IC[1])];
 			if (MDR == 0) {
-				if (a > 0x0F) {
+				if (hex(a) > 0x0F) {
 					SI = 2;
 					return;
 				}
@@ -268,7 +268,7 @@ public class CPU {
 			ICtmp = iterateAndConvert(IC, 2);
 			byte b = ram[hex(IC[0])][hex(IC[1])];
 			if (MDR == 0) {
-				if (a > 0x0F) {
+				if (hex(a) > 0x0F) {
 					SI = 2;
 					return;
 				}
@@ -292,7 +292,7 @@ public class CPU {
 			ICtmp = iterateAndConvert(IC, 2);
 			byte b = ram[hex(IC[0])][hex(IC[1])];
 			if (MDR == 0) {
-				if (a > 0x0F) {
+				if (hex(a) > 0x0F) {
 					SI = 2;
 					return;
 				}
