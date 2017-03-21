@@ -18,13 +18,13 @@ public class MissingLink {
 	public static HardwareMethods hardwareMethods;
 
 	public MissingLink() {
-		frame = new RealMachine();
-		frame.setVisible(true);
-
 		ram = new MemoryUnit();
 		cpu = new CPU(ram);
 
 		hardwareMethods = new HardwareMethods(cpu);
+
+		frame = new RealMachine();
+		frame.setVisible(true);
 
 		setUpRamTable();
 	}

@@ -155,19 +155,10 @@ public class RealMachine extends JFrame {
 
 		initTextFields();
 		initActionListeners();
+		refreshData();
 	}
 
 	private void initTextFields() {
-		PTRtextField.setText("|01|");
-		ICtextField.setText("|00|00|");
-		SPtextField.setText("|00|00|");
-		CDRtextField.setText("|00|00|00|00|00|");
-		ARtextField.setText("|00|00|00|00|");
-		MDRtextField.setText("|00|");
-		TItextField.setText("|00|");
-		PItextField.setText("|00|");
-		SItextField.setText("|00|");
-
 		PTRtextField.getDocument().addDocumentListener(new CustomDocumentListener(PTRtextField));
 		ICtextField.getDocument().addDocumentListener(new CustomDocumentListener(ICtextField));
 		SPtextField.getDocument().addDocumentListener(new CustomDocumentListener(SPtextField));

@@ -13,13 +13,13 @@ public class CPU {
 	protected Byte[][] ram;
 
 	public Byte[] IC = { new Byte((byte) 0), new Byte((byte) 0) };
-	public Byte[] SP = { new Byte((byte) 0), new Byte((byte) 0) };
+	public Byte[] SP = { new Byte((byte) 13), new Byte((byte) 0) };
 
 	public Byte PTR = new Byte((byte) 1);
 
-	public Byte MDR = new Byte((byte) 0);
+	public Byte MDR = new Byte((byte) 1);
 
-	public Byte TI = new Byte((byte) 0);
+	public Byte TI = new Byte((byte) 50);
 	public Byte PI = new Byte((byte) 0);
 	public Byte SI = new Byte((byte) 0);
 
@@ -361,10 +361,10 @@ public class CPU {
 	public void CHNG_S() {
 		MDR = 1;
 		TI = 50;
-		ram[14][4 * (PTR - 1) + 0] = IC[0];
-		ram[14][4 * (PTR - 1) + 1] = IC[1];
-		ram[14][4 * (PTR - 1) + 2] = SP[0];
-		ram[14][4 * (PTR - 1) + 3] = SP[1];
+		ram[12][4 * (PTR - 1) + 0] = IC[0];
+		ram[12][4 * (PTR - 1) + 1] = IC[1];
+		ram[12][4 * (PTR - 1) + 2] = SP[0];
+		ram[12][4 * (PTR - 1) + 3] = SP[1];
 		IC[0] = 0;
 		IC[1] = 0;
 		SP[0] = 0;
