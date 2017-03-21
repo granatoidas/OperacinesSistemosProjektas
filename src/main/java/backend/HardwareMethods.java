@@ -52,7 +52,7 @@ public class HardwareMethods {
 	private void executeInstruction(Byte instruction) {
 		switch (instruction) {
 		case 0x00:
-			// cpu.CHNG_S();
+			cpu.CHNG_S();
 			break;
 		case 0x01:
 			cpu.ADD();
