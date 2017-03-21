@@ -48,8 +48,8 @@ public class HardwareMethods {
 			cpu.TI = 50;
 			cpu.IC[0] = 0;
 			cpu.IC[1] = 0;
-			cpu.SP[0] = 0;
-			cpu.SP[1] = 13;
+			cpu.SP[0] = 13;
+			cpu.SP[1] = 0;
 			cpu.PI = 5;
 		}
 
@@ -136,7 +136,7 @@ public class HardwareMethods {
 			cpu.CHNG_S();
 			break;
 		case 0x17:
-			// cpu.SET_PTR();
+			cpu.SET_PTR();
 			break;
 		case 0x18:
 			cpu.SET_TI();
@@ -295,6 +295,5 @@ public class HardwareMethods {
 		HDDtable.setModel(new CustomTableModel(hdd));
 
 		Utilities.resizeColumnWidth(HDDtable);
-		frame.setVisible(true);
 	}
 }

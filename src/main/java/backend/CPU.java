@@ -365,8 +365,8 @@ public class CPU {
 		ram[12][4 * (PTR - 1) + 3] = SP[1];
 		IC[0] = 0;
 		IC[1] = 0;
-		SP[0] = 0;
-		SP[1] = 13;
+		SP[0] = 13;
+		SP[1] = 0;
 
 	}
 
@@ -378,8 +378,8 @@ public class CPU {
 		MDR = 0;
 		IC[0] = 0;
 		IC[1] = 0;
-		SP[0] = 0;
-		SP[1] = 13;
+		SP[0] = 13;
+		SP[1] = 0;
 
 	}
 
@@ -492,6 +492,21 @@ public class CPU {
 		SPtmp = iterateAndConvert(SP, 4);
 		ram[hex(SPtmp[0])][hex(SPtmp[1])] = d;
 		this.SP = iterateRegister(this.SP, 4);
+		this.IC = iterateRegister(this.IC, 1);
+	}
+
+	public void SET_PTR() {
+		if (MDR == 0) {
+			SI = (byte) 2;
+			return;
+		}
+		Byte[] SPtmp = iterateAndConvert(SP, 0);
+		byte a = ram[hex(SPtmp[0])][hex(SPtmp[1])];
+		a = (byte) (a & 0x0F);
+		if(a == 0)
+			a = 1;
+		this.PTR = a;
+		this.SP = iterateRegister(this.SP, -1);
 		this.IC = iterateRegister(this.IC, 1);
 	}
 }

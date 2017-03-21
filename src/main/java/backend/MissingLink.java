@@ -25,6 +25,7 @@ public class MissingLink {
 
 		frame = new RealMachine();
 		frame.setVisible(true);
+		hardwareMethods.frame.setVisible(true);
 
 		setUpRamTable();
 	}
