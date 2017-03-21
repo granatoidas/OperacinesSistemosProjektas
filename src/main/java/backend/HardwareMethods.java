@@ -32,14 +32,29 @@ public class HardwareMethods {
 
 	public void mainMachineCycle() {
 		if (cpu.TI == 0) {
-
+			cpu.CHNG_S();
 		}
 		// instruction Location
 		Byte[] iL = (cpu.MDR == 1)? cpu.IC : pagingMechanism(cpu.IC);
 		Byte instruction = cpu.ram[cpu.hex(iL[0])][cpu.hex(iL[1])];
 		cpu.decrementTimer();
 		executeInstruction(instruction);
+		
+		switch(cpu.SI){
+		case 1:
+		case 2:
+		case 3:
+			cpu.MDR = 1;
+			cpu.TI = 50;
+			cpu.IC[0] = 0;
+			cpu.IC[1] = 0;
+			cpu.SP[0] = 0;
+			cpu.SP[1] = 13;
+			cpu.PI = 5;
+		}
 
+		cpu.SI = 0;
+		
 		MissingLink.frame.refreshData();
 	}
 
