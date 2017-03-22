@@ -46,7 +46,7 @@ public class RealMachine extends JFrame {
 	public RealMachine() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Real machine");
-		setBounds(300, 150, 800, 600);
+		setBounds(150, 150, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

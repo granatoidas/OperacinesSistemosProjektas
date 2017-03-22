@@ -19,12 +19,12 @@ public class CustomDocumentListener implements DocumentListener {
 
 	@Override
 	public void insertUpdate(DocumentEvent e) {
-		txtField.setBackground(Color.RED);
+		txtField.setBackground(new Color(0xff, 0x4d, 0x4d, 255));
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e) {
-		txtField.setBackground(Color.RED);
+		txtField.setBackground(new Color(0xff, 0x4d, 0x4d, 255));
 	}
 	
 }
